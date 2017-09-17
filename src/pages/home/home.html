@@ -1,0 +1,92 @@
+<!-- <link rel="stylesheet" href="/src/vendors/swiper/css/swiper.min.css">  -->
+
+<ion-header id="header-handle">
+	<ion-navbar>
+		<ion-icon menuToggle name="menu" class="app-menu-toggle"></ion-icon>
+		<!-- <ion-title>Home</ion-title> -->
+		<span class="pull-right header-cart cursor-pointer" (click)="appService.redirectToShoppingCartPage()">
+			<ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+			<sub class="">{{appService.cartCount}}</sub>
+		</span>
+	</ion-navbar>
+</ion-header>
+<ion-content>
+	<!-- <button ion-button block menuToggle>Toggle Menu</button> -->
+	<article [hidden]="!pageLoading">
+		<img class="loading-image" src="assets/imgs/loading-image-2.gif" />
+	</article>
+	<section class="home-wrapper" [hidden]="pageLoading">
+		<section class="home-page-top-slider"  id="home-page-slider" *ngIf="showHomeSlider">			
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" *ngFor="let bannerImage of bannerImagesList" >
+						<img class="home-slider-image" src = "{{bannerImage}}"/>
+					</div>
+				</div>
+				<div class="swiper-pagination"></div>
+				<!-- <div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div> -->
+			</div>
+		</section>
+		<section class="card-section">
+			<h2 class="card-section-title"> Shop By Category</h2>
+			<ion-scroll scrollX="true" class="card-section-wrapper">
+				<div class="disp-inline-block all-items">
+			 		<button ion-button color="secondary" round (click)="redirectToCategory()">All<br/>Categories</button>
+				</div>
+				<div class="disp-inline-block" *ngIf="categoriesList && categoriesList.length">
+					<div class="each-row">
+						<button *ngFor = "let category of categoriesList.slice(0,(categoriesList.length)/2)" ion-button color="secondary" round (click)="redirectToCategory(category)">{{category.name}}</button>
+					</div>
+					<div class="each-row">
+						<button *ngFor = "let category of categoriesList.slice((categoriesList.length)/2,categoriesList.length-1)" ion-button color="secondary" round (click)="redirectToCategory(category)">{{category.name}}</button>
+					</div>
+				</div>
+			</ion-scroll>
+		</section>
+		<section class="card-section">
+			<h2 class="card-section-title"> Shop By Brand</h2>
+			<ion-scroll scrollX="true" class="card-section-wrapper">
+				<div class="disp-inline-block all-items">
+			 		<button ion-button color="secondary" round (click)="redirectToBrand()">All<br/>Brands</button>
+				</div>
+				<div class="disp-inline-block" *ngIf="brandsList && brandsList.length">
+					<div class="each-row">
+						<button *ngFor = "let brand of brandsList.slice(0,(brandsList.length-1)/2)" ion-button color="secondary" round (click)="redirectToBrand(brand)">{{brand.name}}</button>
+					</div>
+					<div class="each-row">
+						<button *ngFor = "let brand of brandsList.slice((brandsList.length-1)/2,brandsList.length-1)" ion-button color="secondary" round (click)="redirectToBrand(brand)">{{brand.name}}</button>
+					</div>
+				</div>
+			</ion-scroll>
+		</section>
+		<section class="card-section">
+			<div class="card-section-header">
+				<h2 class="card-section-title disp-inline-block pull-left"> New Arrivals</h2>
+				<button ion-button outline class="pull-right view-all-button margin-right-10" color="danger" (click)="redirectWithSort(3)">View all </button>
+			</div>
+			<ion-scroll scrollX="true" class="card-section-lg-wrapper">
+				<div class="card-section-inner-wrapper">
+					<ion-col class="listing-card-outer-wrapper" *ngFor="let item of newArrivalsList">
+						<cracker-item [data]="item"></cracker-item>
+					</ion-col>
+				</div>
+			</ion-scroll>
+		</section>
+		<section class="card-section">
+			<div class="card-section-header">
+				<h2 class="card-section-title disp-inline-block pull-left"> Discounts</h2>
+				<button ion-button outline class="pull-right view-all-button margin-right-10" color="danger" (click)="redirectWithSort(4)">View all </button>
+			</div>
+			<ion-scroll scrollX="true" class="card-section-lg-wrapper">
+				<div class="card-section-inner-wrapper">
+					<ion-col class="listing-card-outer-wrapper" *ngFor="let item of discountList">
+						<cracker-item [data]="item"></cracker-item>
+					</ion-col>
+				</div>
+			</ion-scroll>
+		</section>
+	</section>
+</ion-content>
+
+<!-- <script src="/src/vendors/swiper/js/swiper.min.js"></script> -->

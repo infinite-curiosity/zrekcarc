@@ -1,0 +1,161 @@
+// http://ionicframework.com/docs/v2/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+//$dark-grey-theme :  linear-gradient(to right, #8e9eab, #eef2f3);//#333; //#37474F;
+$dark-grey-theme : linear-gradient(to left, #e9e4f0, #fff); // linear-gradient(to right,  #f2f2f2, #dbdbdb, #eaeaea);
+$aqua-theme : #00CDCD;// #00E5EE;// rgba(175, 0, 0, 1); //rgba(202,44,32,1);//#EF4437;
+$pink-theme : rgb(255,64,129);
+$angulr-violet : #6254b2;
+$angulr-blue : #23b7e5;
+$action-green-color : #32db64;
+$action-red-color : #f53d3d;
+$gs-0 : #000;
+$gs-3 : #333;
+$gs-32 : #fff;
+
+$youtube-red:#cd201f;
+$yahoo-vioet : #410093;
+$theme-base : $yahoo-vioet;//$aqua-theme;
+$theme-secondary : $youtube-red;//$pink-theme;
+
+@import "./src/pages/loading/loading.scss";
+
+.header{
+	color: #fff;
+}
+.disp-none{
+	display: none;
+}
+.disp-block{
+	display: block;
+}
+.disp-inline-block{
+	display: inline-block;
+}
+.disp-flex{
+	display: flex;
+}
+.disp-inline-flex{
+	display: inline-flex;
+}
+.disp-flex-center-xy{
+	display: flex;
+	justify-content: center !important;
+	align-items: center !important;
+	text-align: center !important;
+}
+
+.position-relative{
+	position: relative;
+}
+.cursor-pointer{
+	cursor: pointer;
+}
+.text-right{
+	text-align: right;
+}
+.text-center{
+	text-align: center;
+}
+.pull-left{
+	float: left;
+}
+.pull-right{
+	float: right;
+}
+.full-height{
+	height: 100%;
+    min-height: 100%;
+}
+.app-menu-toggle{
+	font-size: 3rem;
+    z-index: 2;
+    position: fixed;
+    padding: 5px;
+}
+.toolbar-background{
+	background : $theme-base !important;
+}
+.toolbar-title{
+	color : #fff !important;
+}
+.login-action{
+	color: white;
+	font-size: .7em;
+    float: right;
+    cursor: pointer;
+}
+.app-menu-wrapper{
+	ion-list .item, .scroll-content{
+		background : $dark-grey-theme !important;
+		color : $theme-base;
+		font-weight: bold;
+	}
+}
+.margin-top-10{
+	margin-top:10px;
+}
+.margin-top-15{
+	margin-top:15px;
+}
+.margin-bottom-10{
+	margin-bottom:10px;
+}
+.margin-right-5{
+	margin-right: 5px;
+}
+.margin-right-10{
+	margin-right:10px;
+}
+.white-space-nowrap{
+	white-space:nowrap;
+}
+.ellipse{
+	white-space: nowrap;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+.header-cart{
+	padding: 0 10px;
+    font-size: 1.75rem;
+}
+ion-header.header{
+	.back-button-ios, .back-button-md{
+		color: $gs-32 !important;
+	}
+}
+//for full page popover
+.popover-content {
+	top:0px !important;
+	left:0 !important;
+	width:100% !important
+};
+//making filter popover fullscreen
+
+.popover-content{
+	min-height: 100% !important;
+	border-radius: 0 !important;
+}
+.empty-state-wrapper{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	padding: 0 10%;
+	background: linear-gradient(to left, #d3cce3, #e9e4f0);
+}

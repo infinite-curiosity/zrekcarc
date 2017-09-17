@@ -1,0 +1,59 @@
+<!-- before log-in show  -->
+<div [ngClass]="{'disp-block full-height' : !hasLoggedIn, 'disp-none': hasLoggedIn}">
+	<page-login class="full-height"></page-login>
+</div>
+
+<!-- loading show  -->
+<div [ngClass]="{'disp-block' : showLoading, 'disp-none': !showLoading}">
+	<show-loading></show-loading>
+</div>
+
+<ion-menu [content]="content"><!--  [ngClass]="{'disp-block' : hasLoggedIn, 'disp-none': !hasLoggedIn}"> -->
+  <ion-header>
+    <ion-toolbar>
+      <div>
+          <h5>
+        		<span class="pull-left">Hello Guest</span>
+        		<ion-icon class="pull-right" (click)="openPage('loginPage');" menuToggle name="log-in" class="login-action"> Login </ion-icon>
+          </h5>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="app-menu-wrapper" >
+    <!-- <img class="loading-image" src="assets/imgs/loading-image-2.gif" /> -->
+    <img class="loading-image" src="assets/imgs/diwali.jpg" />
+    <ion-list>
+      <button menuToggle ion-item (click)="openPage('homePage')">
+        Home
+      </button>
+      <button menuToggle ion-item (click)="openPage('listingPage')">
+        Explore
+      </button>
+      <button menuToggle ion-item (click)="openPage('shoppingCartPage')">
+        Shopping Cart
+      </button>
+       <button menuToggle ion-item (click)="openPage('orderHistoryPage')">
+        My Orders
+      </button>
+       <button menuToggle ion-item (click)="openPage('wishlistPage')">
+        Wish List
+      </button>
+      <!-- <button menuToggle ion-item (click)="openPage('myAccountPage')">
+        My Account
+      </button>
+      <button menuToggle ion-item (click)="openPage('referralPage')">
+        Refer Friend
+      </button>
+      <button menuToggle ion-item (click)="openPage('settingsPage')">
+        Settings
+      </button>
+      <button menuToggle ion-item (click)="openPage('contactUsPage')">
+        Contact Us
+      </button> -->
+
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<!-- after log-in show  -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false" [ngClass]="{'disp-block' : hasLoggedIn, 'disp-none': !hasLoggedIn}"></ion-nav>

@@ -1,0 +1,18 @@
+page-login {
+	background-color: #eee;
+	.fixed-content{
+		background: #eee;
+	}
+	.login-section{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.login-form-wrapper{
+			height: auto;
+		    padding: 60px;		   
+		}
+		.login-button-override{
+			background-color: $theme-base !important;
+		}
+	}
+}

@@ -1,0 +1,40 @@
+<!-- <ion-header class="disp-none">
+  <ion-navbar>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-navbar>
+</ion-header> -->
+<ion-header>
+	<ion-navbar>
+		<ion-icon menuToggle name="menu" class="app-menu-toggle"></ion-icon>
+		<!-- <ion-title>Shop</ion-title> -->
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding class="full-height">
+	<section class="login-section full-height">
+		<div class="login-form-wrapper">		
+			<h1 class="box-title disp-block">Login{{confirmPassword}}</h1>
+			<form action="#">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input margin-top-15" [(ngModel)]="mobileNo" [ngModelOptions]="{standalone: true}" type="tel" pattern="-?[0-9]*(\.[0-9]+)?" id="mobno">
+					<label class="mdl-textfield__label" for="sample4">Please enter 10-digit Mobile #</label>
+					<span class="mdl-textfield__error">Not a valid mobile number!</span>
+				</div>		
+				<br/>	
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="password" id="sample3" [(ngModel)]="pwd" [ngModelOptions]="{standalone: true}" >
+					<label class="mdl-textfield__label" for="sample3">Password</label>
+				</div>			
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" *ngIf="confirmPwdShow">
+					<input class="mdl-textfield__input" type="password" id="sample3"[(ngModel)]="confirmPwd" [ngModelOptions]="{standalone: true}" >
+					<label class="mdl-textfield__label" for="sample3">Confirm password</label>
+				</div>
+			</form>			
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent login-button-override" (click)="loginAction()">
+				Submit
+			</button>				
+		</div>
+	</section>
+</ion-content>
