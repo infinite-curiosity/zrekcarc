@@ -75,7 +75,7 @@ page-details {
 			.discount-circle{
 				width: 40px;
 				height: 40px;
-				background-color: rgba(165, 0, 0, 0.85);
+				background-color: $theme-secondary;
 				text-align: center;
 				// padding-top: 10px;
 				// padding: 12px;
@@ -88,7 +88,7 @@ page-details {
 		.product-slider-wishlist{
 			position: relative;
 			top: 0;//-7%;
-			left: 1em;//-2%;
+			margin-right: 10%;
 			z-index: 2;
 			.half-width{
 				width: 50%;
@@ -112,9 +112,9 @@ page-details {
 		.product-description-container{
 			display: flex;
 			flex-wrap: wrap;
-			justify-content: space-around;
+			justify-content: center;
 			align-items: center;
-		    padding: 0 10%;
+		    padding: 0 15%;
 		    .action-footer{
 				display: inline-flex;
 				justify-content: space-around;
@@ -134,23 +134,84 @@ page-details {
 			.remove-from-cart{
 				color: #32db64;
 				background : #fff;
-			}
-		    .price-section{
-		    	// align-self: left;
-				padding-top: 10px;
-			    padding-bottom: 10px;
-				font-size: 1em;
-				.old-price{
-					text-decoration: line-through;
-				}
+			}		    
+			.card-price-section{
+				display: flex;
+				justify-content: space-between;
+				margin: auto 1em;
+				align-items: center;
+				width: 100%;
 				.price-section-label{
-					font-size: .7em;
+					font-size: .8em;
 					text-transform: uppercase;
 				}
-				display: flex;
-				align-items: center;
-				justify-content: space-evenly;
-		    }
+				.product-price{
+					color : $gs-0;
+					font-size: 1em;
+				}
+				.product-original-price{
+					color: $gs-3;
+					text-decoration: line-through;
+					font-size: 0.8em;
+				}
+				.discount-section{
+					font-size: 0.8em;
+					position: relative;
+					// top: 3px;
+					margin-left: 1em;
+					height: 22px;
+					width: 32px;
+					.discount-item{
+						color:  $theme-secondary;
+					}
+					.discount-label {
+						position: absolute;
+						white-space: normal !important;
+						display: inline-flex;
+						align-items: center;
+						height: 22px;
+						padding: 1px 2px;
+						top: 0;
+						right: 0;
+						width: 32px;
+						background: $theme-secondary;//$action-red-color;
+						-webkit-border-radius:0 4px 0 4px;
+						-moz-border-radius:0 4px 0 4px;
+						border-radius:0 4px 4px 0;
+					}
+					.discount-label:before {
+						content: '';
+						z-index: 2;
+						position: absolute;
+						top: 9.5px;
+						left: -5px;
+						width: 4px;
+						height: 4px;
+						opacity: .95;
+						background: $gs-32;
+						border-radius: 7px;
+						box-shadow: inset 0.5px 0 rgba(0, 0, 0, 0.6);
+					}
+					.discount-label:after {
+						right: 100%;
+						border: solid transparent;
+						content: " ";
+						height: 0;
+						width: 0;
+						position: absolute;
+						border-color: rgba(136, 183, 213, 0);
+						border-width: 11px;
+						top: 0px;
+
+						border-right-color: $theme-secondary;//$action-red-color;
+					}
+					.discount-value {
+						color : $gs-32;
+						text-align : center;
+						font-size: .7em;
+					}
+				}
+			}
 		    .in-stock{
 		    	margin:1em;
 		    }

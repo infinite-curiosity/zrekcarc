@@ -1,40 +1,75 @@
-<!-- <ion-header class="disp-none">
-  <ion-navbar>
-    <ion-title>
-      Login
-    </ion-title>
-  </ion-navbar>
-</ion-header> -->
-<ion-header>
-	<ion-navbar>
-		<ion-icon menuToggle name="menu" class="app-menu-toggle"></ion-icon>
-		<!-- <ion-title>Shop</ion-title> -->
-	</ion-navbar>
-</ion-header>
-
-<ion-content padding class="full-height">
-	<section class="login-section full-height">
-		<div class="login-form-wrapper">		
-			<h1 class="box-title disp-block">Login{{confirmPassword}}</h1>
+<ion-content class="login-signup-outer-wrapper">
+	<section class="login-signup-section login-section full-height" *ngIf="!viewSignup">
+		<div class="login-signup-form-wrapper login-form-wrapper">		
+			<h1 class="box-title disp-block">LogIn</h1>
 			<form action="#">
 				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-					<input class="mdl-textfield__input margin-top-15" [(ngModel)]="mobileNo" [ngModelOptions]="{standalone: true}" type="tel" pattern="-?[0-9]*(\.[0-9]+)?" id="mobno">
-					<label class="mdl-textfield__label" for="sample4">Please enter 10-digit Mobile #</label>
+					<input class="mdl-textfield__input margin-top-15" [(ngModel)]="loginObj.mobileNo" [ngModelOptions]="{standalone: true}" type="tel" pattern="-?[0-9]*(\.[0-9]+)?" id="signin_mobNo">
+					<label class="mdl-textfield__label" for="signin_mobNo">Please enter 10-digit Mobile #</label>
 					<span class="mdl-textfield__error">Not a valid mobile number!</span>
 				</div>		
-				<br/>	
 				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-					<input class="mdl-textfield__input" type="password" id="sample3" [(ngModel)]="pwd" [ngModelOptions]="{standalone: true}" >
-					<label class="mdl-textfield__label" for="sample3">Password</label>
+					<input class="mdl-textfield__input" type="password" id="signin_pwd" [(ngModel)]="loginObj.pwd" [ngModelOptions]="{standalone: true}" >
+					<label class="mdl-textfield__label" for="signin_pwd">Password</label>
 				</div>			
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" *ngIf="confirmPwdShow">
-					<input class="mdl-textfield__input" type="password" id="sample3"[(ngModel)]="confirmPwd" [ngModelOptions]="{standalone: true}" >
-					<label class="mdl-textfield__label" for="sample3">Confirm password</label>
+			</form>			
+			<div class="disp-flex-center-xy">
+				<button class="mdl-button mdl-js-button login-signup-button" (click)="loginAction()" [ngClass]="{true : 'mdl-button--raised mdl-js-ripple-effect mdl-button--accent  login-signup-button-override'}[!disableLogin()]">
+					LogIn
+				</button>			
+				<button ion-button clear class="skip-login" (click)="skipLogin()">
+					Skip
+				</button>				
+			</div>
+			<div class="disp-flex-center-xy margin-top-15">
+				<span class="helper-text-signup">Don't have an account ? </span>
+				<button ion-button clear class="skip-login" (click)="showSignup()">
+					SignUp
+				</button>				
+			</div>
+		</div>
+	</section>
+	
+	<section class="login-signup-section signup-section full-height"  *ngIf="viewSignup">
+		<div class="login-signup-form-wrapper signup-form-wrapper">
+			<h1 class="box-title disp-block">SignUp</h1>
+			<form action="#">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="text" id="signup_name" [(ngModel)]="signupObj.name" [ngModelOptions]="{standalone: true}" >
+					<label class="mdl-textfield__label" for="signup_name">Full name</label>
+				</div>	
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input margin-top-15" [(ngModel)]="signupObj.mobileNo" [ngModelOptions]="{standalone: true}" type="tel" pattern="-?[0-9]*(\.[0-9]+)?" id="signup_mobileNo">
+					<label class="mdl-textfield__label" for="signup_mobileNo">10-digit Mobile Number</label>
+					<span class="mdl-textfield__error">Not a valid mobile number!</span>
+				</div>	
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="text" id="signup_email" [(ngModel)]="signupObj.email" [ngModelOptions]="{standalone: true}" >
+					<label class="mdl-textfield__label" for="signup_email">Email</label>
+				</div>		
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="password" id="signup_pwd" [(ngModel)]="signupObj.pwd" [ngModelOptions]="{standalone: true}" >
+					<label class="mdl-textfield__label" for="signup_pwd">Password</label>
+				</div>	
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="password" id="signup_confirm_pwd"[(ngModel)]="signupObj.confirmPwd" [ngModelOptions]="{standalone: true}" >
+					<label class="mdl-textfield__label" for="signup_confirm_pwd">Confirm password</label>
 				</div>
 			</form>			
-			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent login-button-override" (click)="loginAction()">
-				Submit
-			</button>				
+			<div class="disp-flex-center-xy">
+				<button class="mdl-button mdl-js-button login-signup-button" (click)="signupAction()" [ngClass]="{true : 'mdl-button--raised mdl-js-ripple-effect mdl-button--accent  login-signup-button-override'}[!disableSignup()]">
+					Register
+				</button>			
+				<button ion-button clear class="skip-login" (click)="skipLogin()">
+					Skip
+				</button>				
+			</div>
+			<div class="disp-flex-center-xy margin-top-15">
+				<span class="helper-text-signup">Already have an account ? </span>
+				<button ion-button clear class="skip-login" (click)="showLogin()">
+					LogIn
+				</button>				
+			</div>			
 		</div>
 	</section>
 </ion-content>

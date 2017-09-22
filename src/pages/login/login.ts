@@ -12,20 +12,106 @@ import { AppService } from "../../app/app.service";
 })
 
 export class LoginPage {
-    public mobileNo = null;
-    public pwd = null;
-    public confirmPwd = null;
-    public confirmPwdShow = false;
-
+    public loginObj;
+    public signupObj;
+    public viewSignup = false;
+    
 	@ViewChild(Content) content: Content;
   	scrollToTop() {
     	this.content.scrollToTop();
   	}
-  	constructor(private http: Http, public events : Events, private toastCtrl: ToastController, public appService : AppService) {
-  		this.mobileNo = "9994055593";
-  	}
+  	constructor(private http: Http, public events : Events, private toastCtrl: ToastController, public appService : AppService) {      
+      this.loginObj = this.createLoginObj();
+      this.signupObj = this.createSignupObj();
+      this.loginObj.mobileNo = "9994055593";      
+    }
+    
+    createLoginObj(){
+      return {
+        mobileNo : null,
+        pwd : null        
+      };
+    }
 
-    pwdValidationError(msg) {
+    createSignupObj(){
+      return {
+        name : null,
+        mobileNo : null,
+        email : null,
+        pwd : null,
+        confirmPwd : null
+      };
+    }
+    showSignup(){
+      this.signupObj = this.createSignupObj();
+      this.viewSignup = true;
+    }
+
+    showLogin(){      
+      this.loginObj = this.createLoginObj();
+      this.viewSignup = false;
+    }
+
+    skipLogin(){
+      this.events.publish('logIn',true, null);
+    }
+
+  	loginAction(){      
+      var serviceUrl = this.appService.getBaseUrl()+"/user/login";
+  		var request = {
+            data: this.loginObj.mobileNo,
+            password: this.loginObj.pwd
+        };
+		this.http
+		  	.post(serviceUrl, request)
+		  	.map(res => res.json())
+		  	.subscribe(res => {
+		  		if(res.response===200){            
+            this.events.publish('logIn',true,res.data.id,res.data.name);
+            this.presentToast("Welcome "+res.data.name+" !!");
+		  		}else{
+            this.presentToast("Invalid Login credentials");
+		  			this.events.publish('logIn',false, null, null);
+		  		}
+		  	});
+    }
+
+    signupAction(){
+      if(this.signupObj.pwd != this.signupObj.pwd){
+        this.presentToast("Password and confirm password do not match");
+        return;
+      }
+      var serviceUrl = this.appService.getBaseUrl()+"/user/login";
+  		var request = {
+            data: this.loginObj.mobileNo,
+            password: this.loginObj.pwd
+        };
+		  this.http
+		  	.post(serviceUrl, request)
+		  	.map(res => res.json())
+		  	.subscribe(res => {
+		  		if(res.response===200){            
+            this.events.publish('logIn',true,res.data.id,res.data.name);
+            this.presentToast("Welcome "+res.data.name+" !!");
+		  		}else{
+            this.presentToast("Invalid Login credentials");
+		  			this.events.publish('logIn',false, null, null);
+		  		}
+		  	});
+    }
+    
+    disableLogin(){      
+      var valid = Boolean(this.loginObj.mobileNo) && Boolean(this.loginObj.pwd);
+      return !valid;
+    }
+
+    disableSignup(){
+      var valid = Boolean(this.signupObj.name) && Boolean(this.signupObj.mobileNo) && Boolean(this.signupObj.email) 
+                  && Boolean(this.signupObj.pwd) && Boolean(this.signupObj.confirmPwd);
+      return !valid;
+    }
+
+    presentToast(msg) {
       let toast = this.toastCtrl.create({
         message: msg,
         duration: 3000,
@@ -39,33 +125,5 @@ export class LoginPage {
       toast.present();
     }
 
-  	loginAction(){
-        if(!this.mobileNo || !this.pwd){// || !this.confirmPwd || ){
-            this.pwdValidationError("Please enter the mandatory fields");
-            return;
-        }
-        /*if(this.pwd!==this.confirmPwd){
-            this.pwdValidationError("Password and Confirm Password don't match");
-            return;
-        }*/
-      var serviceUrl = this.appService.getBaseUrl()+"/user/login";
-  		var request = {
-            data: this.mobileNo,
-            password: this.pwd
-        };
-		this.http
-		  	.post(serviceUrl, request)
-		  	.map(res => res.json())
-		  	.subscribe(res => {
-		  		if(res.response===200){
-            this.appService.setUserId(res.data.id);
-		  			this.events.publish('logIn',true,res.data.id);
-		  		}else{
-            this.pwdValidationError("Invalid Login credentials");
-		  			this.events.publish('logIn',false, null);
-		  		}
-		  		console.info("response",res);
-		  	});
-  	}
 
 }

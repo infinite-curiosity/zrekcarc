@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav } from 'ionic-angular';
+import { Platform, Nav, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Events } from 'ionic-angular';
@@ -14,7 +14,7 @@ import { DetailsPage } from '../pages/details/details';
 import { ShoppingCartPage } from '../pages/cart/cart';
 import { OrderHistoryPage } from '../pages/orders/orders';
 import { WishlistPage } from '../pages/wishlist/wishlist';
-import { CrackerItem } from '../pages/product/product';
+//import { CrackerItem } from '../pages/product/product';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,30 +22,59 @@ import { CrackerItem } from '../pages/product/product';
 export class MyApp {
   @ViewChild(Nav) nav;
   rootPage:any = HomePage;
-  public hasLoggedIn = false;
+  public hasLoggedIn = true;
   public showLoading = true;
   public userId = null;
   public myApp = this;
-  constructor(appService: AppService, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public events : Events) {
-    platform.ready().then(() => {
-        statusBar.styleDefault();
-        splashScreen.hide();
-        console.info("appService",appService);
-        appService.openPage = this.openPage;
-        appService.myApp = this.myApp;
-        events.subscribe('logIn', (status, userId) => {
-            this.hasLoggedIn = status;
-            this.userId = userId;
-        });
-        events.subscribe('showLoading', (status) => {
-          this.showLoading = status;
+  constructor(public appService: AppService, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public events : Events, public toastCtrl: ToastController) {
+      statusBar.styleDefault();
+      splashScreen.hide();
+      appService.openPage = this.openPage;
+      appService.myApp = this.myApp;
+      events.subscribe('logIn', (status,userId,userName) => {
+          this.processLoginInfo(status,userId,userName);
       });
+      events.subscribe('showLogInScreen', (status) => {
+          this.hasLoggedIn = !status;
+      });        
+      events.subscribe('showLoading', (status) => {
+        this.showLoading = status;
     });
   }
+
+  processLoginInfo(status, userId, userName){
+    //ToDo : rename hasLogginIn to slideOutLoginPopup everywhere
+    this.hasLoggedIn = status;
+    this.userId = userId;
+    this.appService.setUserId(userId);
+    this.appService.setUserName(userName);
+  }
+
+  doLogout(){
+    this.processLoginInfo(true,null,null);
+    this.presentToast("You've been Logged out :(");
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+
+    });
+
+    toast.present();
+  }
+
   openPage(page){
+    console.info("this",this);
     switch (page) {
        case "loginPage":
-         this.nav.push(LoginPage);
+         //this.nav.push(LoginPage);
+         this.hasLoggedIn = false;
         break;
       case "showLoading":
         this.nav.push(ShowLoading);
@@ -60,13 +89,25 @@ export class MyApp {
         this.nav.push(DetailsPage);
         break;
        case "shoppingCartPage":
-        this.nav.push(ShoppingCartPage);
+         if(!(this.appService.getUserId() > 0)){
+            this.events.publish('showLogInScreen',true);
+        }	else{
+          this.nav.push(ShoppingCartPage);
+        }        
         break;
       case "orderHistoryPage":
-        this.nav.push(OrderHistoryPage);
+        if(!(this.appService.getUserId() > 0)){
+            this.events.publish('showLogInScreen',true);
+        }	else{
+          this.nav.push(OrderHistoryPage);
+        }         
         break;
       case "wishlistPage":
-        this.nav.push(WishlistPage);
+        if(!(this.appService.getUserId() > 0)){
+            this.events.publish('showLogInScreen',true);
+        }	else{
+          this.nav.push(WishlistPage);
+        }                 
         break;
       case "signupPage":
          this.nav.push(LoginPage);

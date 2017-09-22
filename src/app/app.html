@@ -1,20 +1,21 @@
-<!-- before log-in show  -->
-<div [ngClass]="{'disp-block full-height' : !hasLoggedIn, 'disp-none': hasLoggedIn}">
+<div class="login-screen" [ngClass]="{'slide-in' : !hasLoggedIn, 'slide-out': hasLoggedIn}">
 	<page-login class="full-height"></page-login>
 </div>
 
 <!-- loading show  -->
-<div [ngClass]="{'disp-block' : showLoading, 'disp-none': !showLoading}">
+<div class="root-loading-screen" [ngClass]="{'disp-block' : showLoading, 'disp-none': !showLoading}">
 	<show-loading></show-loading>
 </div>
 
-<ion-menu [content]="content"><!--  [ngClass]="{'disp-block' : hasLoggedIn, 'disp-none': !hasLoggedIn}"> -->
+<ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
       <div>
           <h5>
-        		<span class="pull-left">Hello Guest</span>
-        		<ion-icon class="pull-right" (click)="openPage('loginPage');" menuToggle name="log-in" class="login-action"> Login </ion-icon>
+            <span class="pull-left" *ngIf="!appService.getUserName()">Hello Guest</span>
+            <span class="pull-left" *ngIf="appService.getUserName()">Hello {{appService.getUserName()}}</span>
+            <ion-icon class="pull-right" (click)="openPage('loginPage');" menuToggle name="log-in" class="login-action" *ngIf="!(appService.getUserId()>0)"> Login </ion-icon>
+            <ion-icon class="pull-right" (click)="doLogout()" menuToggle name="log-out" class="login-action" *ngIf="appService.getUserId()>0"> LogOut </ion-icon>
           </h5>
       </div>
     </ion-toolbar>
@@ -56,4 +57,4 @@
 </ion-menu>
 
 <!-- after log-in show  -->
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false" [ngClass]="{'disp-block' : hasLoggedIn, 'disp-none': !hasLoggedIn}"></ion-nav>
+<ion-nav [root]="rootPage" #content swipeBackEnabled="true"  [ngClass]="{'disp-block' : !showLoading, 'disp-none': showLoading}"></ion-nav>

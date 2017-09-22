@@ -12,11 +12,11 @@
 </ion-header>
 <ion-content>
 	<!-- <button ion-button block menuToggle>Toggle Menu</button> -->
-	<article [hidden]="!pageLoading">
+	<!-- <article [hidden]="!pageLoading">
 		<img class="loading-image" src="assets/imgs/loading-image-2.gif" />
-	</article>
+	</article> -->
 	<section class="home-wrapper" [hidden]="pageLoading">
-		<section class="home-page-top-slider"  id="home-page-slider" *ngIf="showHomeSlider">			
+		<section class="home-page-top-slider"  id="home-page-slider">			
 			<div class="swiper-container">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide" *ngFor="let bannerImage of bannerImagesList" >
@@ -28,7 +28,7 @@
 				<div class="swiper-button-next"></div> -->
 			</div>
 		</section>
-		<section class="card-section">
+		<section class="card-section" [hidden]="pageLoading">
 			<h2 class="card-section-title"> Shop By Category</h2>
 			<ion-scroll scrollX="true" class="card-section-wrapper">
 				<div class="disp-inline-block all-items">
@@ -44,7 +44,7 @@
 				</div>
 			</ion-scroll>
 		</section>
-		<section class="card-section">
+		<section class="card-section" [hidden]="pageLoading">
 			<h2 class="card-section-title"> Shop By Brand</h2>
 			<ion-scroll scrollX="true" class="card-section-wrapper">
 				<div class="disp-inline-block all-items">
@@ -60,7 +60,7 @@
 				</div>
 			</ion-scroll>
 		</section>
-		<section class="card-section">
+		<section class="card-section" [hidden]="pageLoading">
 			<div class="card-section-header">
 				<h2 class="card-section-title disp-inline-block pull-left"> New Arrivals</h2>
 				<button ion-button outline class="pull-right view-all-button margin-right-10" color="danger" (click)="redirectWithSort(3)">View all </button>
@@ -73,7 +73,7 @@
 				</div>
 			</ion-scroll>
 		</section>
-		<section class="card-section">
+		<section class="card-section" [hidden]="pageLoading">
 			<div class="card-section-header">
 				<h2 class="card-section-title disp-inline-block pull-left"> Discounts</h2>
 				<button ion-button outline class="pull-right view-all-button margin-right-10" color="danger" (click)="redirectWithSort(4)">View all </button>
@@ -88,5 +88,3 @@
 		</section>
 	</section>
 </ion-content>
-
-<!-- <script src="/src/vendors/swiper/js/swiper.min.js"></script> -->

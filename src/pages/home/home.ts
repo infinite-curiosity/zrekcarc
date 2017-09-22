@@ -26,22 +26,18 @@ export class HomePage {
 
 	//@ViewChild(Slides) slides: Slides;		
 
-	constructor(public navCtrl: NavController, private http: Http, platform: Platform, public events : Events, public appService : AppService) {
+	constructor(public navCtrl: NavController, private http: Http, public platform: Platform, public events : Events, public appService : AppService) {
 		this.loadingRef = this.appService.getLoadingRef();		
-		platform.ready().then(() => {
-	        events.subscribe('logIn', (status, userId) => {
-	            this.initHomePage();
-	        });
-	    });
+		this.initHomePage();
 	}
 
 	ionViewWillEnter(){
-		this.initHomePage();
-		this.showHomeSlider = true;
+		// this.initHomePage();
+		// this.showHomeSlider = true;
 	}
 
 	ionViewWillLeave(){
-		this.showHomeSlider = false;
+		//this.showHomeSlider = false;
 	}
 	
 	initHomePage(){
@@ -49,7 +45,13 @@ export class HomePage {
 	}	
 	
 	initCarouselSlide(){
-		document.getElementById('home-page-slider').style.marginTop = document.getElementById('header-handle').offsetHeight + "px";			
+		//document.getElementById('home-page-slider').style.marginTop = document.getElementById('header-handle').offsetHeight + "px";					
+		if (this.platform.is('ios')) {
+			document.getElementById('home-page-slider').style.marginTop = "64px";		
+		}
+		else{
+			document.getElementById('home-page-slider').style.marginTop = "56px";						
+		}
 		this.homeSlider = new Swiper ('.swiper-container', {
 			direction: 'horizontal',
 			loop: true,		
@@ -62,15 +64,15 @@ export class HomePage {
 			initialSlide : 0,
 			//autoHeight : true,
 			//paginationClickable : true
-		  });   
-	}
-
-	onSlideChanged(){
-
+		});   
+		setTimeout(()=>{
+			this.loadingRef.dismiss();	
+		},200);
 	}
 
   	fetchData(){
-  		this.loadingRef.present();
+		this.loadingRef.present();
+		this.pageLoading = true;
   		var request = {
   			"uid" : Number(this.appService.getUserId())
   		};
@@ -79,17 +81,13 @@ export class HomePage {
 			.post(serviceUrl,request)
 			.map(res => res.json())
 			.subscribe(res => {
-				console.info("response",res);
-				this.processInitData(res.data);
-				let timeoutId = setTimeout(() => {
-				  	this.loadingRef.dismiss();
-				}, 1000);
+				this.processInitData(res.data);;
 				/*if(res.response===200){
 					this.events.publish('logIn', true);
 				}else{
 					this.events.publish('logIn', true);//false);
 				}		  				  		  		*/
-				//this.pageLoading = false;
+				this.pageLoading = false;
 			});
   	}
 
@@ -100,9 +98,9 @@ export class HomePage {
 		this.newArrivalsList = data.newArrivals;
 		this.discountList = data.discounted;
 		this.bannerImagesList = data.bannerImages;		
-		setTimeout(() =>  {
-			this.initCarouselSlide();
-		}, 300);
+		setTimeout(()=>{
+			this.initCarouselSlide();			
+		},100);		
   	}
 
 

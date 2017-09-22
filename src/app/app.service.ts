@@ -6,6 +6,7 @@ import { Events } from 'ionic-angular';
 @Injectable()
 export class AppService {
     private userId;
+    private userName;
     private baseUrl;
     public cartCount;
     public openPage;
@@ -18,10 +19,19 @@ export class AppService {
         return this.userId;
     }
     setUserId(userId){
-        this.userId = userId;
-        if(userId>0){
+        if(!userId){
+            this.userId = -1;    
+        }
+        else{
+            this.userId = userId;
             this.getCartItems();
         }
+    }
+    getUserName(){
+        return this.userName;
+    }
+    setUserName(userName){
+        this.userName = userName;        
     }
     getBaseUrl(){
         return this.baseUrl;
@@ -58,7 +68,6 @@ export class AppService {
         this.openPage.call(this.myApp,"shoppingCartPage");
     }
     getLoadingRef(){
-        console.info("kk",this);
         return {
             present : (() => {
                 this.events.publish("showLoading",true);

@@ -5,48 +5,11 @@ page-home {
 	.swiper-pagination-bullet-active{
 		background: #ccc;	
 	}
-	// ion-slide{
-	// 	background-image: url("../assets/imgs/home-bg-1.jpg") !important;
-	// 	background-attachment: scroll;
-	// 	background-size: cover;
-	// }
-	.home-slider{
-		.home-slider-image{
-
-		}
-		.slider-default-image{
-			background-image: url("../assets/imgs/home-bg-1.jpg") !important;
-			background-attachment: scroll;	
-			background-size: cover;
-		}
-		.swiper-container {
-			width: 100%;
-			height: 100%;
-		}
-		.swiper-slide {
-			text-align: center;
-			font-size: 18px;
-			background: #fff;
-			/* Center slide text vertically */
-			display: -webkit-box;
-			display: -ms-flexbox;
-			display: -webkit-flex;
-			display: flex;
-			-webkit-box-pack: center;
-			-ms-flex-pack: center;
-			-webkit-justify-content: center;
-			justify-content: center;
-			-webkit-box-align: center;
-			-ms-flex-align: center;
-			-webkit-align-items: center;
-			align-items: center;
-		}
-	}
+	.home-page-top-slider{
+		min-height: 136px;
+	}		
 	ion-content{
-		background : $dark-grey-theme !important;
-		/*background-image: url("../assets/imgs/home-bg-1.jpg") !important;
-		background-attachment: scroll;
-		background-size: cover;*/
+		background : $dark-grey-theme !important;		
 	}
 	.home-wrapper{
 		/*background-color: rgba(0,0,0,.25) !important;*/

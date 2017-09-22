@@ -5,8 +5,10 @@ show-loading {
 	opacity: 1;
 	width:100vw;
 	height: 100vh;
+	transition : all 1s ease-in-out;
 	.fixed-content{
-		background: rgba(0,0,0,0.8) !important;
+		//background: rgba(0,0,0,0.65) !important;
+		background: $theme-base;
 	}
 	
 }
@@ -29,10 +31,10 @@ ion-backdrop{
 }
 .app-loading{
 	//$color: #fd7000;
-	$color: $gs-32;
-	$size: 12px;
+	$color: #fff;
+	$size: 8px;
 	height: 100vh !important;
-	$time: .5;
+	$time: .65;
 
 	display: flex;
 	justify-content: center;
@@ -76,8 +78,8 @@ ion-backdrop{
 	}
 
 	@keyframes blink {
-	  0% { opacity: 0.1; }
-	  30% { opacity: 1; }
+	  0% { opacity: 1; }
+	  50% { opacity: 1; }
 	  100% { opacity: 0.1; }
 	}
 

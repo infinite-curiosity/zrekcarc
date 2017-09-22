@@ -44,11 +44,12 @@ export class ListingPage {
 				id : 4,
 				title : 'Discount Rate',
 			}
-		]
+		];
+		this.fetchCategoriesAndBrands();
 	}
 
 	ionViewWillEnter(){
-		this.fetchCategoriesAndBrands();
+		//this.fetchCategoriesAndBrands();
 	}
 
 	ionViewWillLeave(){
@@ -131,9 +132,7 @@ export class ListingPage {
 
   	processListingData(data){
   		this.productList = data.products;
-  		let timeoutId = setTimeout(() => {
-		  	this.loadingRef.dismiss();
-		}, 1000);
+		this.loadingRef.dismiss();
   	}
 
   	fetchCategoriesAndBrands(){

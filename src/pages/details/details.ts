@@ -15,7 +15,6 @@ export class DetailsPage {
 	public cartQuantity;
 	public ratingByUser=0;
 	public reviewTextByUser;
-	public reviewList;
 	public productDetail;
 	public pageLoading;
 	public productImages;
@@ -28,10 +27,11 @@ export class DetailsPage {
 	public self;
 	public dtlsSlider;
 	public showDtlsSlider;
-	public averageReview
+	public averageReview;
+	public reviews;
+
 
 	constructor(private http: Http, public navParams: NavParams, private toastCtrl: ToastController, public appService : AppService) {
-		this.reviewList = this.getReviewList();
 		this.pageLoading = true;
 		this.loadingRef = this.appService.getLoadingRef();
 		this.self = this;
@@ -101,6 +101,8 @@ export class DetailsPage {
 				if(res.response===200){
 					this.presentToast("Review submitted successfully");
 					this.fetchData();
+					this.ratingByUser = 0;
+					this.reviewTextByUser = null;					
 				}else{
 
 				}
@@ -161,12 +163,13 @@ export class DetailsPage {
   		this.description = data.description;
 		this.discountPercentage = data.discountPercentage;
 		this.price = data.price;
-		this.netPrice = data.netPrice;
+		this.netPrice = data.netPrice.toFixed(2);
 		this.productImages = data.images;
 		this.averageReview = data.averageReview;		  
   		this.initCarouselSlide();
   		this.isStockAvailable = data.isStockAvailable;
-  		this.isInCart = data.isInCart;
+		this.isInCart = data.isInCart;
+		this.reviews = data.reviews;
   		(data.cartQuantity) ? this.cartQuantity = data.cartQuantity : function(){};
   		(data.isInWishList) ? this.isInWishList = data.isInWishList : function(){};
   		let timeoutId = setTimeout(() => {

@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import { Events } from 'ionic-angular';
 import { DetailsPage } from '../details/details';
 import { AppService } from "../../app/app.service";
+import {Observable} from 'rxjs/Observable';
 
 let self;
 
@@ -25,6 +26,10 @@ export class CrackerItem {
 	}
 
 	setAsFav(item){		
+		if(!(this.appService.getUserId() > 0)){
+			this.events.publish('showLogInScreen',true);
+			return Observable.throw('Login required!');
+		}		
 		(!item) ? item = self : function(){};
 		item.isInWishList = true;
 		self.presentToast(item.productName + " added to wishlist");
@@ -51,6 +56,10 @@ export class CrackerItem {
 	}
 
 	unsetAsFav(item){
+		if(!(this.appService.getUserId() > 0)){
+			this.events.publish('showLogInScreen',true);
+			return Observable.throw('Login required!');
+		}		
 		(!item) ? item = self : function(){};
 		item.isInWishList = false;
 		self.presentToast(item.productName + " removed from wishlist");
@@ -84,12 +93,20 @@ export class CrackerItem {
   	}
 
 	addToCart(item){
+		if(!(this.appService.getUserId() > 0)){
+			this.events.publish('showLogInScreen',true);
+			return Observable.throw('Login required!');
+		}		
 		(!item) ? item=this : function(){};
 		(!item.cartQuantity) ? item.cartQuantity = 1 : item.cartQuantity += 1;
 		return this.updateCart(item);
 	}
 
 	removeFromCart(item){
+		if(!(this.appService.getUserId() > 0)){
+			this.events.publish('showLogInScreen',true);
+			return Observable.throw('Login required!');
+		}		
 		(!item) ? item=this : function(){};
 		(!item.cartQuantity) ? item.cartQuantity = 0 : item.cartQuantity -= 1;
 		return this.updateCart(item);
