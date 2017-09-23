@@ -149,7 +149,7 @@ export class ShoppingCartPage {
 			couponCode: this.couponCode
 		};
 		var serviceUrl = this.appService.getBaseUrl()+"/store/applyCoupon";
-		var thisObservable =  this.http
+		this.http
 			.post(serviceUrl,request)
 			.map(res => res.json())
 			.subscribe(res => {
@@ -229,8 +229,7 @@ export class ShoppingCartPage {
   			}
 		};
 		var serviceUrl = this.appService.getBaseUrl()+"/store/addAddress";
-		var thisObservable =  this.http
-			.post(serviceUrl,request)
+		this.http.post(serviceUrl,request)
 			.map(res => res.json())
 			.subscribe(res => {
 				if(res.response===200){

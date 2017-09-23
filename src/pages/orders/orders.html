@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-navbar>
 		<ion-icon menuToggle name="menu" class="app-menu-toggle"></ion-icon>
-		<!-- <ion-title>Shop</ion-title> -->
+		<ion-title>My Orders ({{this.totalOrdersCount}})</ion-title>
 	</ion-navbar>
 </ion-header>
 <ion-content>
@@ -11,8 +11,8 @@
 	</section>
 	<section class="shopping-cart-wrapper" *ngIf="list.length && !loading">
 		<section class="shopping-cart-wrapper">
-			<h1 class="text-center margin-bottom-10">My Orders</h1>
-			<hr/>
+			<!-- <h1 class="text-center margin-bottom-10">My Orders ({{this.totalOrdersCount}}) </h1> 
+			<hr/> -->
 			<ion-list class="cart-list-wrapper">
 				<ion-item *ngFor="let item of list">
 					<div [ngClass]="{'each-cart-item-condensed' : !item.viewMoreDetails, 'each-cart-item-expanded': item.viewMoreDetails}">
@@ -30,7 +30,7 @@
 							<br/>
 							<ul>
 								<li *ngFor="let orderItem of item.productNames.slice(0,3)">{{orderItem}}</li>
-								<div *ngIf="item.productNames.length>4">and {{item.productNames.length - 4}} more item(s)</div>
+								<div *ngIf="item.productNames && item.productNames.length>4">and {{item.productNames.length - 4}} more item(s)</div>
 							</ul>
 							<!-- <h2>Lakshmi Vedi</h2>
 							<p>Standard Fireworks</p>

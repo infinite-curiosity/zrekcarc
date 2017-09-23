@@ -1,5 +1,5 @@
 import { Component, ViewChild  } from '@angular/core';
-import { Platform, NavController, Slides  } from 'ionic-angular';
+import { Platform, NavController  } from 'ionic-angular';
 import {Http} from '@angular/http';
 import { Events } from 'ionic-angular';
 import { CrackerItem } from '../product/product';

@@ -1,11 +1,13 @@
 <ion-header>
 	<ion-navbar>
 		<ion-icon menuToggle name="menu" class="app-menu-toggle"></ion-icon>
-		<!-- <ion-title>{{productName}}</ion-title> -->
-		<span class="pull-right header-cart cursor-pointer" (click)="appService.redirectToShoppingCartPage()">
-			<ion-icon ios="ios-cart" md="md-cart"></ion-icon>
-			<sub class="">{{appService.cartCount}}</sub>
-		</span>
+		<div class="disp-flex-header">
+			<ion-title>{{productName}}</ion-title>
+			<span class="pull-right header-cart cursor-pointer" (click)="appService.redirectToShoppingCartPage()">
+				<ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+				<sub class="">{{appService.cartCount}}</sub>
+			</span>
+		</div>
 	</ion-navbar>
 </ion-header>
 <ion-content>

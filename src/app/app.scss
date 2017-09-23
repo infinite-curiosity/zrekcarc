@@ -39,13 +39,10 @@ $theme-secondary : $youtube-red;//$pink-theme;
 }
 .login-screen{
 	height: 0;
-	transition : top .5s ease-in-out;
+	transition : top 300 ease-in;
 	position: relative;  
 	top: -100vh;
 	z-index: 9999;
-}
-.root-loading-screen{
-	
 }
 .slide-in{
 	height: 100vh;
@@ -75,7 +72,11 @@ $theme-secondary : $youtube-red;//$pink-theme;
 	align-items: center !important;
 	text-align: center !important;
 }
-
+.disp-flex-header{
+	display: flex;
+	justify-content: space-between !important;
+	align-items: center !important;
+}
 .position-relative{
 	position: relative;
 }

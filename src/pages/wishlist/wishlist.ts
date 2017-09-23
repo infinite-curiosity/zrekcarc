@@ -53,7 +53,7 @@ export class WishlistPage {
 				}else{
 
 				}
-				let timeoutId = setTimeout(() => {
+				setTimeout(() => {
 					  this.loadingRef.dismiss();
 					  this.loading = false;
 				}, 1000);

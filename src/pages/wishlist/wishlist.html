@@ -1,11 +1,13 @@
 <ion-header>
 	<ion-navbar>
 		<ion-icon menuToggle name="menu" class="app-menu-toggle"></ion-icon>
-		<!-- <ion-title>Shop</ion-title> -->
-		<span class="pull-right header-cart cursor-pointer" (click)="appService.redirectToShoppingCartPage()">
-			<ion-icon ios="ios-cart" md="md-cart"></ion-icon>
-			<sub class="">{{appService.cartCount}}</sub>
-		</span>
+		<div class="disp-flex-header">
+			<ion-title>My Wishlist ({{list.length}})</ion-title>
+			<span class="pull-right header-cart cursor-pointer" (click)="appService.redirectToShoppingCartPage()">
+				<ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+				<sub class="">{{appService.cartCount}}</sub>
+			</span>
+		</div>
 	</ion-navbar>
 </ion-header>
 <ion-content>
@@ -15,8 +17,6 @@
 	<!-- <button ion-button block menuToggle>Toggle Menu</button> -->
 	<section class="shopping-cart-wrapper" *ngIf="list.length && !loading">
 		<section class="shopping-cart-wrapper">
-			<h1 class="text-center margin-bottom-10">My Wishlist ({{list.length}})</h1>
-			<br/>
 			<ion-list class="cart-list-wrapper">
 				<ion-item *ngFor="let item of list">
 					<div class="each-cart-item">

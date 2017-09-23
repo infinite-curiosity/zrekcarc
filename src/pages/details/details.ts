@@ -172,7 +172,7 @@ export class DetailsPage {
 		this.reviews = data.reviews;
   		(data.cartQuantity) ? this.cartQuantity = data.cartQuantity : function(){};
   		(data.isInWishList) ? this.isInWishList = data.isInWishList : function(){};
-  		let timeoutId = setTimeout(() => {
+  		setTimeout(() => {
 		  	this.loadingRef.dismiss();
 		}, 1000);
   	}

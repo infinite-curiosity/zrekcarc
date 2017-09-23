@@ -1,13 +1,13 @@
-<!-- <link rel="stylesheet" href="/src/vendors/swiper/css/swiper.min.css">  -->
-
 <ion-header id="header-handle">
-	<ion-navbar>
-		<ion-icon menuToggle name="menu" class="app-menu-toggle"></ion-icon>
-		<!-- <ion-title>Home</ion-title> -->
-		<span class="pull-right header-cart cursor-pointer" (click)="appService.redirectToShoppingCartPage()">
-			<ion-icon ios="ios-cart" md="md-cart"></ion-icon>
-			<sub class="">{{appService.cartCount}}</sub>
-		</span>
+	<ion-navbar>		
+		<div class="disp-flex-header">
+			<ion-icon menuToggle name="menu" class="app-menu-toggle"></ion-icon>
+			<ion-title class="margin-left-45">Home</ion-title>
+			<span class="pull-right header-cart cursor-pointer" (click)="appService.redirectToShoppingCartPage()">
+				<ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+				<sub class="">{{appService.cartCount}}</sub>
+			</span>
+		</div>
 	</ion-navbar>
 </ion-header>
 <ion-content>

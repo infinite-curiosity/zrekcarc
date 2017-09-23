@@ -1,4 +1,4 @@
-import { Component, ViewChild  } from '@angular/core';
+import { Component  } from '@angular/core';
 import { NavController, ToastController  } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { AppService } from "../../app/app.service";
@@ -38,7 +38,7 @@ export class OrderHistoryPage {
 			.subscribe(res => {
 				if(res.response===200){
 					console.info("response",res);
-					this.list = res.data.orders;
+					this.list = (res.data && res.data.orders) ? res.data.orders : [];  
 					this.list.forEach(item => {
 						item.orderStatusText = this.getOrderStatusText(item.status);
 					});
