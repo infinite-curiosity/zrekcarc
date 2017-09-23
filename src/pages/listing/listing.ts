@@ -1,7 +1,6 @@
-import { Component, ViewChild  } from '@angular/core';
-import { NavController, NavParams, Slides  } from 'ionic-angular';
+import { Component  } from '@angular/core';
+import { NavController, NavParams  } from 'ionic-angular';
 import {Http} from '@angular/http';
-import { CrackerItem } from '../product/product';
 import { PopoverController } from 'ionic-angular';
 import { AppService } from "../../app/app.service";
 import { FilterComponent } from '../filter/filter';
@@ -44,6 +43,10 @@ export class ListingPage {
 				id : 4,
 				title : 'Discount Rate',
 			}
+			// {
+			// 	id : 0,
+			// 	title : 'None'
+			// }
 		];
 		this.fetchCategoriesAndBrands();
 	}

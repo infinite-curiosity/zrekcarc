@@ -44,7 +44,8 @@ order-history {
 			}
 		}
 		.view-more-wrapper-open{
-			max-height: 500px;
+			max-height: 600px;
+			overflow-y: auto;
 		}
 		.view-more-wrapper-close{
 			max-height: 0;

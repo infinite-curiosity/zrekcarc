@@ -29,7 +29,8 @@
 							</sub>
 							<br/>
 							<ul>
-								<li *ngFor="let orderItem of item.productNames">{{orderItem}}</li>
+								<li *ngFor="let orderItem of item.productNames.slice(0,3)">{{orderItem}}</li>
+								<div *ngIf="item.productNames.length>4">and {{item.productNames.length - 4}} more item(s)</div>
 							</ul>
 							<!-- <h2>Lakshmi Vedi</h2>
 							<p>Standard Fireworks</p>
@@ -40,13 +41,19 @@
 							</div> -->
 							<div class="order-status-wrapper">
 								<div>
-									<button class="order-status" ion-button color="secondary" outline rounded>Delivered</button>
-									<button class="order-cancel" ion-button color="danger" outline rounded (click)="cancelOrder(item)">Cancel Order</button>
+									<button class="order-status" ion-button color="secondary" clear>{{item.orderStatusText}}</button>
+									<button class="order-cancel" ion-button color="danger" rounded (click)="cancelOrder(item)">Cancel Order</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="margin-top-10 margin-bottom-10 view-more-wrapper" [ngClass]="{'view-more-wrapper-open' : item.viewMoreDetails, 'view-more-wrapper-close': !item.viewMoreDetails}">
+						<div class="details">
+							<b>Order List</b>						
+						<ul>
+							<li *ngFor="let orderItem of item.productNames"><p>{{orderItem}}</p></li>
+						</ul>
+					</div>
 						<div class="details" *ngIf="item.details">
 							<div><b>Delivered to:</b></div>
 							<p>{{item.details.address.addressLine1}}</p>

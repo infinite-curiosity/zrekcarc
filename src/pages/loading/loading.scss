@@ -7,8 +7,9 @@ show-loading {
 	height: 100vh;
 	transition : all 1s ease-in-out;
 	.fixed-content{
-		//background: rgba(0,0,0,0.65) !important;
-		background: $theme-base;
+		//background: rgba(0,0,0,0.85) !important;
+		background: rgba(65,0,147,.85) !important;
+		//background: $theme-base;
 	}
 	
 }

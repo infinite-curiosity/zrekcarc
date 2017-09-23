@@ -58,8 +58,10 @@ export class MyApp {
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 3000,
-      position: 'top'
+      duration: this.appService.getToastSettings().duration,
+      showCloseButton: this.appService.getToastSettings().showCloseButton,
+      closeButtonText : this.appService.getToastSettings().closeButtonText,
+      position: this.appService.getToastSettings().position
     });
 
     toast.onDidDismiss(() => {

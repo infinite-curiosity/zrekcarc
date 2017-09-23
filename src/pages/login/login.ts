@@ -15,6 +15,10 @@ export class LoginPage {
     public loginObj;
     public signupObj;
     public viewSignup = false;
+    public NAME_MIN_LENGTH = 4;
+    public NAME_MAX_LENGTH = 25;
+    public PWD_MIN_LENGTH = 4;
+    public PWD_MAX_LENGTH = 15;
     
 	@ViewChild(Content) content: Content;
   	scrollToTop() {
@@ -29,7 +33,9 @@ export class LoginPage {
     createLoginObj(){
       return {
         mobileNo : null,
-        pwd : null        
+        pwd : null,
+        mobileNoInvalid : false,
+        pwdInvalid : false
       };
     }
 
@@ -39,7 +45,12 @@ export class LoginPage {
         mobileNo : null,
         email : null,
         pwd : null,
-        confirmPwd : null
+        confirmPwd : null,
+        nameInvalid : false,
+        mobileNoInvalid : false,
+        emailInvalid : false,
+        pwdInvalid : false,
+        confirmPwdInvalid : false
       };
     }
     showSignup(){
@@ -69,6 +80,7 @@ export class LoginPage {
 		  		if(res.response===200){            
             this.events.publish('logIn',true,res.data.id,res.data.name);
             this.presentToast("Welcome "+res.data.name+" !!");
+            this.loginObj = this.createLoginObj();
 		  		}else{
             this.presentToast("Invalid Login credentials");
 		  			this.events.publish('logIn',false, null, null);
@@ -77,15 +89,13 @@ export class LoginPage {
     }
 
     signupAction(){
-      if(this.signupObj.pwd != this.signupObj.pwd){
-        this.presentToast("Password and confirm password do not match");
-        return;
-      }
-      var serviceUrl = this.appService.getBaseUrl()+"/user/login";
+      var serviceUrl = this.appService.getBaseUrl()+"/user/register";      
   		var request = {
-            data: this.loginObj.mobileNo,
-            password: this.loginObj.pwd
-        };
+          name: this.signupObj.name,
+          mobileNo: this.signupObj.mobileNo,            
+          email: this.signupObj.email,
+          password: this.signupObj.pwd,
+      };
 		  this.http
 		  	.post(serviceUrl, request)
 		  	.map(res => res.json())
@@ -93,29 +103,82 @@ export class LoginPage {
 		  		if(res.response===200){            
             this.events.publish('logIn',true,res.data.id,res.data.name);
             this.presentToast("Welcome "+res.data.name+" !!");
+            this.signupObj = this.createSignupObj();
 		  		}else{
             this.presentToast("Invalid Login credentials");
 		  			this.events.publish('logIn',false, null, null);
 		  		}
 		  	});
     }
+
+    validateMobileNo(obj){
+      if(isFinite(obj.mobileNo) && (obj.mobileNo >= Math.pow(10,9)) &&  (obj.mobileNo < Math.pow(10,10))){
+        obj.mobileNoInvalid = false;
+        return (true);  
+      }            
+      obj.mobileNoInvalid = true;
+      return (false);  
+    }
+
+    validatePwd(obj){
+      if(obj.pwd && (obj.pwd.length >= this.PWD_MIN_LENGTH) && (obj.pwd.length <= this.PWD_MAX_LENGTH)){
+        obj.pwdInvalid = false;
+        return (true);  
+      }
+      obj.pwdInvalid = true;
+      return (false);        
+    }
+
+    validateConfirmPwd(obj){
+      if(obj.pwd === obj.confirmPwd){
+        obj.confirmPwdInvalid = false;
+        return (true);  
+      }
+      obj.confirmPwdInvalid = true;
+      return (false);        
+    }
+
+    validateEmail(){
+      var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (emailRegex.test(this.signupObj.email)){  
+        this.signupObj.emailInvalid = false;
+        return (true);  
+      }  
+      this.signupObj.emailInvalid = true;
+      return (false);  
+    }
+
+    validateName(){
+      var nameRegex = /^[a-zA-Z ]*$/;
+      if(this.signupObj.name && nameRegex.test(this.signupObj.name) && ( this.signupObj.name.length >= this.NAME_MIN_LENGTH) && ( this.signupObj.name.length <= this.NAME_MAX_LENGTH)){
+        this.signupObj.nameInvalid = false;
+        return (true);  
+      }
+      this.signupObj.nameInvalid = true;
+      return (false);        
+    }
     
     disableLogin(){      
-      var valid = Boolean(this.loginObj.mobileNo) && Boolean(this.loginObj.pwd);
+      var valid = Boolean(this.loginObj.mobileNo) && Boolean(this.loginObj.pwd) && !this.loginObj.mobileNoInvalid;
       return !valid;
     }
 
     disableSignup(){
-      var valid = Boolean(this.signupObj.name) && Boolean(this.signupObj.mobileNo) && Boolean(this.signupObj.email) 
-                  && Boolean(this.signupObj.pwd) && Boolean(this.signupObj.confirmPwd);
+      var valid = Boolean(this.signupObj.name) && !this.signupObj.nameInvalid
+                  && Boolean(this.signupObj.mobileNo)  && !this.signupObj.mobileNoInvalid
+                  && Boolean(this.signupObj.email) && !this.signupObj.emailInvalid
+                  && Boolean(this.signupObj.pwd) && Boolean(this.signupObj.confirmPwd)  
+                  && !this.signupObj.pwdInvalid && !this.signupObj.confirmPwdInvalid;
       return !valid;
     }
 
     presentToast(msg) {
       let toast = this.toastCtrl.create({
         message: msg,
-        duration: 3000,
-        position: 'top'
+        duration: this.appService.getToastSettings().duration,
+        showCloseButton: this.appService.getToastSettings().showCloseButton,
+        closeButtonText : this.appService.getToastSettings().closeButtonText,
+        position: this.appService.getToastSettings().position
       });
 
       toast.onDidDismiss(() => {

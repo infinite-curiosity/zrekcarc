@@ -46,28 +46,28 @@ export class HomePage {
 	
 	initCarouselSlide(){
 		//document.getElementById('home-page-slider').style.marginTop = document.getElementById('header-handle').offsetHeight + "px";					
-		if (this.platform.is('ios')) {
-			document.getElementById('home-page-slider').style.marginTop = "64px";		
-		}
-		else{
-			document.getElementById('home-page-slider').style.marginTop = "56px";						
-		}
+		// if (this.platform.is('ios')) {
+		// 	document.getElementById('home-page-slider').style.marginTop = "64px";		
+		// }
+		// else{
+		// 	document.getElementById('home-page-slider').style.marginTop = "56px";						
+		// }
 		this.homeSlider = new Swiper ('.swiper-container', {
 			direction: 'horizontal',
 			loop: true,		
 			pagination: '.swiper-pagination',		
 			// nextButton: '.swiper-button-next',
 			// prevButton: '.swiper-button-prev',
-			autoplay : 2000,
-			speed : 750,			
-			effect : 'cube',
-			initialSlide : 0,
-			//autoHeight : true,
+			 autoplay : 2000,
+			// speed : 750,			
+			// effect : 'cube',
+			// initialSlide : 0,
+			autoHeight : true,
 			//paginationClickable : true
 		});   
 		setTimeout(()=>{
 			this.loadingRef.dismiss();	
-		},200);
+		},1000);
 	}
 
   	fetchData(){

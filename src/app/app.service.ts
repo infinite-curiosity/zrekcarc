@@ -77,6 +77,14 @@ export class AppService {
             })
         };        
     }
+    getToastSettings(){
+        return {
+            duration: 1500,
+            showCloseButton: false,
+            closeButtonText : "x",
+            position: "bottom"
+        }
+    }
     getLoadingRefIonic() {
         let loading = this.loadingCtrl.create({
             spinner: 'hide',

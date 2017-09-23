@@ -179,10 +179,11 @@ export class DetailsPage {
 
   	presentToast(msg) {
 		let toast = this.toastCtrl.create({
-		    message: msg,
-		    duration: 2000,
-		    showCloseButton: false,
-		    position: 'top'
+			message: msg,
+			duration: this.appService.getToastSettings().duration,
+			showCloseButton: this.appService.getToastSettings().showCloseButton,
+			closeButtonText : this.appService.getToastSettings().closeButtonText,
+			position: this.appService.getToastSettings().position
 		});
 
 		/*toast.onDidDismiss(() => {

@@ -267,8 +267,8 @@ export class ShoppingCartPage {
 			case "cod":
 				request.paymentMode = 100;
 				break;
-			case "cod":
-				request.paymentMode = "payUmoney";
+			case "online":
+				request.paymentMode = 101;
 				break;
 			default:
 				request.paymentMode = "cod";
@@ -326,13 +326,22 @@ export class ShoppingCartPage {
 		}
   	}
 
+	getCouponConstants(){
+		return{
+			COUPON_TYPE_NONE : 0,        
+			COUPON_TYPE_OTHER : 1001,
+			COUPON_TYPE_ACK_REFER : 1002,
+			COUPON_TYPE_REFER : 1003
+		}
+	}
 
 	presentToast(msg) {
 		let toast = this.toastCtrl.create({
-		    message: msg,
-		    duration: 2000,
-		    showCloseButton: false,
-		    position: 'top'
+			message: msg,
+			duration: this.appService.getToastSettings().duration,
+			showCloseButton: this.appService.getToastSettings().showCloseButton,
+			closeButtonText : this.appService.getToastSettings().closeButtonText,
+			position: this.appService.getToastSettings().position
 		});
 
 		toast.present();

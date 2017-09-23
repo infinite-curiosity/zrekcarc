@@ -27,7 +27,9 @@ export class OrderHistoryPage {
   	fetchData(){
   		this.loadingRef.present();
 		var request = {
-			uid: this.appService.getUserId()
+			uid: this.appService.getUserId(),
+			offet:0,
+			count:2000
 		};
 		var serviceUrl = this.appService.getBaseUrl()+"/store/getOrdersList";
 		this.http
@@ -37,11 +39,14 @@ export class OrderHistoryPage {
 				if(res.response===200){
 					console.info("response",res);
 					this.list = res.data.orders;
+					this.list.forEach(item => {
+						item.orderStatusText = this.getOrderStatusText(item.status);
+					});
 					this.totalOrdersCount = res.data.totalOrdersCount;
 				}else{
 
 				}
-				let timeoutId = setTimeout(() => {
+				setTimeout(() => {
 				  	this.loadingRef.dismiss();
 				}, 1000);
 			});
@@ -90,14 +95,36 @@ export class OrderHistoryPage {
 
 				}
 			});
-  	}
+	  }
+	  
+	getOrderStatusText(orderStatusId){
+		switch(orderStatusId){
+			case 1:
+				return "DELIVERED";
+			case 2:
+				return "IN TRANSIT";
+			case 3:
+				return "OUT_FOR_DELIVERY";
+			case 4:
+				return "ORDER_PLACED";
+			case 5:
+				return "PENDING";
+			case 6:
+				return "CANCELLED";
+			case 7:
+				return "FAILED";
+			case 8:
+				return "ADMIN_CANCELLED";
+		}
+	}
 
   	presentToast(msg) {
 		let toast = this.toastCtrl.create({
-		    message: msg,
-		    duration: 3000,
-		    showCloseButton: false,
-		    position: 'top'
+			message: msg,
+			duration: this.appService.getToastSettings().duration,
+			showCloseButton: this.appService.getToastSettings().showCloseButton,
+			closeButtonText : this.appService.getToastSettings().closeButtonText,
+			position: this.appService.getToastSettings().position
 		});
 
 		/*toast.onDidDismiss(() => {
@@ -106,5 +133,6 @@ export class OrderHistoryPage {
 
 		toast.present();
 	}
+	
 
 }
