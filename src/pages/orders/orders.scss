@@ -29,6 +29,11 @@ order-history {
 					pointer-events: none;
 				}
 			}
+			.change-order-status{
+				.item{
+					font-size: 14px;
+				}
+			}
 		}
 		.view-more-wrapper{
 			background-color: #eee;
@@ -54,6 +59,9 @@ order-history {
 			cursor: pointer;
 			display: flex;
 			justify-content: flex-end;
+		}
+		.padding-bottom-0{
+			padding-bottom:0 !important;
 		}
 	}
 }

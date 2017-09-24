@@ -3,9 +3,10 @@
 		<ion-icon menuToggle name="menu" class="app-menu-toggle"></ion-icon>
 		<div class="disp-flex-header">
 			<ion-title>Explore</ion-title>
-			<span class="pull-right header-cart cursor-pointer" (click)="appService.redirectToShoppingCartPage()">
-				<ion-icon ios="ios-cart" md="md-cart"></ion-icon>
-				<sub class="">{{appService.cartCount}}</sub>
+			<span class="pull-right header-cart cursor-pointer disp-flex-center-y" (click)="appService.redirectToShoppingCartPage()">
+				<small class="margin-right-5" *ngIf="appService.cartCount">Check Out</small>
+				<ion-icon class="margin-right-5" ios="ios-cart" md="md-cart"></ion-icon>
+				<small>{{appService.cartCount || "0"}}</small>
 			</span>
 		</div>
 	</ion-navbar>

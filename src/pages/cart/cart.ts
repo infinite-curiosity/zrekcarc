@@ -25,6 +25,8 @@ export class ShoppingCartPage {
 	public loadingRef;
 	public newAddress;
 	public loading;
+	public ADDRESS_MIN_LENGTH = 3;
+	public ADDRESS_MAX_LENGTH = 40;
 
 	@ViewChild(CrackerItem) crackerItem: CrackerItem;
 
@@ -137,7 +139,7 @@ export class ShoppingCartPage {
 				}catch(e){
 					console.error("error @ ionic loading module");
 				}
-			}			
+			}
        	);
 	}
 
@@ -212,7 +214,47 @@ export class ShoppingCartPage {
 		);
 
 		//return thisObservable;
-  	}
+	}
+
+	onClickPlaceOrder(){
+		var request = {
+		  uid: this.appService.getUserId(),
+		  addressId: this.selectedDeliveryAddressId,
+		  paymentMode: null,
+		  couponId: 2343,//null,
+		  couponType: 2343,//null
+	  	};
+
+		if(this.couponApplicability == "applicable"){
+			request.couponId = this.couponCode;
+			request.couponType = this.couponType;
+		}
+		switch(this.selectedPaymentMode){
+			case "cod":
+				request.paymentMode = 100;
+				break;
+			case "online":
+				request.paymentMode = 101;
+				break;
+			default:
+				request.paymentMode = 100;
+				break;
+		}
+
+		var serviceUrl = this.appService.getBaseUrl()+"/store/checkOut";
+		var thisObservable =  this.http
+			.post(serviceUrl,request)
+			.map(res => res.json());
+		thisObservable.subscribe(res => {
+			if(res.response===200){
+				this.presentToast("Order placed successfully")
+				this.navCtrl.push(OrderHistoryPage);
+			}else{
+
+			}
+		});
+		return thisObservable;
+	}
 
 
   	doAddAddress(){
@@ -249,45 +291,43 @@ export class ShoppingCartPage {
 		);
   	}
 
-  	onClickPlaceOrder(){
-  		var request = {
-			uid: this.appService.getUserId(),
-			addressId: this.selectedDeliveryAddressId,
-			paymentMode: null,
-			couponId: 2343,//null,
-			couponType: 2343,//null
-		};
-		
-		if(this.couponApplicability == "applicable"){
-			request.couponId = this.couponCode;
-			request.couponType = this.couponType;
+	validateText(text,field){
+		if(text && ( text.length >= this.ADDRESS_MIN_LENGTH) && ( text.length <= this.ADDRESS_MAX_LENGTH)){
+			this.newAddress[field] = false;
+			return (true);
 		}
-		switch(this.selectedPaymentMode){
-			case "cod":
-				request.paymentMode = 100;
-				break;
-			case "online":
-				request.paymentMode = 101;
-				break;
-			default:
-				request.paymentMode = "cod";
-				break;
+		this.newAddress[field] = true;
+		return (false);
+	}
+
+	validateMobileNo(number,field){
+		if(isFinite(number) && (number >= Math.pow(10,9)) &&  (number < Math.pow(10,10))){
+			this.newAddress[field] = false;
+		  return (true);
 		}
+		this.newAddress[field] = true;
+		return (false);
+	}
 
-		var serviceUrl = this.appService.getBaseUrl()+"/store/checkOut";
-		var thisObservable =  this.http
-			.post(serviceUrl,request)
-			.map(res => res.json());
-		thisObservable.subscribe(res => {
-			if(res.response===200){
-				this.presentToast("Order placed successfully")
-				this.navCtrl.push(OrderHistoryPage);
-			}else{
+	validatePinCode(number,field){
+		if(isFinite(number) && (number >= Math.pow(10,5)) &&  (number < Math.pow(10,6))){
+			this.newAddress[field] = false;
+		  	return (true);
+		}
+		this.newAddress[field] = true;
+		return (false);
+	}
 
-			}
-		});
-		return thisObservable;
-  	}
+	disableAddAddress(){
+		var valid = Boolean(this.newAddress.addressLine1) && !this.newAddress.addressLine1Invalid
+					&& Boolean(this.newAddress.addressLine2)  && !this.newAddress.addressLine2Invalid
+					&& Boolean(this.newAddress.city) && !this.newAddress.cityInvalid
+					&& Boolean(this.newAddress.state) && !this.newAddress.stateInvalid
+					&& Boolean(this.newAddress.pinCode) && !this.newAddress.pinCodeInvalid
+					&& Boolean(this.newAddress.contactNo) && !this.newAddress.contactNoInvalid
+					&& Boolean(this.newAddress.alternateContact) && !this.newAddress.alternateContactInvalid
+		return !valid;
+	}
 
   	disableApplyCoupon(){
   		return !(this.couponCode && (typeof this.couponCode)==="string" && this.couponCode.length>3);
@@ -316,18 +356,25 @@ export class ShoppingCartPage {
   	resetNewAddress(){
   		this.newAddress = {
 			addressLine1: null,
+			addressLine1Invalid: false,
 			addressLine2: null,
+			addressLine2Invalid: false,
 			city: null,
+			cityInvalid: false,
 			state: null,
+			stateInvalid: false,
 			pinCode: null,
+			pinCodeInvalid: false,
 			contactNo: null,
-			alternateContact: null
+			contactNoInvalid: false,
+			alternateContact: null,
+			alternateContactInvalid: false,
 		}
   	}
 
 	getCouponConstants(){
 		return{
-			COUPON_TYPE_NONE : 0,        
+			COUPON_TYPE_NONE : 0,
 			COUPON_TYPE_OTHER : 1001,
 			COUPON_TYPE_ACK_REFER : 1002,
 			COUPON_TYPE_REFER : 1003

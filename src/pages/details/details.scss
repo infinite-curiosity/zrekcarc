@@ -13,7 +13,7 @@ page-details {
 						font-size: .8em;
 						min-width: 200px !important;
 						height: 200px !important;
-						display: inline-flex;						
+						display: inline-flex;
 						/*padding: 2.5px;*/
 						margin:0;
 						padding: 0 !important;
@@ -68,9 +68,9 @@ page-details {
 						}
 					}
 				}
-			}								
+			}
 		}
-		.product-slider-discount{			
+		.product-slider-discount{
 			margin-left: 1em;
 			.discount-circle{
 				width: 40px;
@@ -107,7 +107,7 @@ page-details {
 			.remove-from-wishlist{
 				color: #f53d3d;
 				background : #fff;
-			}				
+			}
 		}
 		.product-description-container{
 			display: flex;
@@ -130,11 +130,11 @@ page-details {
 					color: #f53d3d;
 					background : #fff;
 				}
-			}			
+			}
 			.remove-from-cart{
 				color: #32db64;
 				background : #fff;
-			}		    
+			}
 			.card-price-section{
 				display: flex;
 				justify-content: space-between;
@@ -263,6 +263,10 @@ page-details {
 				    min-height: 150px;
 				    margin: 5px 0;
 				    border: 1px solid #eee;
+				}
+				.validation-error{
+					color : red;
+					font-size: 0.7em;
 				}
 			}
 			.view-reviews-wrapper{

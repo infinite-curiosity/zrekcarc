@@ -27,9 +27,7 @@ import { WishlistPage } from '../pages/wishlist/wishlist';
 import { CrackerItem } from '../pages/product/product';
 import { FilterComponent } from '../pages/filter/filter';
 
-
 import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 //import {Observable} from "rxjs/Rx";
 
 @NgModule({
@@ -53,10 +51,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       activator: 'ripple',
-      backButtonText: '',
       modalEnter: 'modal-slide-in',
-      modalLeave: 'modal-slide-out',
-      swipeBackEnabled : true
+      modalLeave: 'modal-slide-out'
     }),
     FormsModule,
     HttpModule,
@@ -83,7 +79,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     AppService,
     StatusBar,
-    SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

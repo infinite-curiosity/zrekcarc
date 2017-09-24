@@ -1,11 +1,12 @@
 <ion-header id="header-handle">
-	<ion-navbar>		
+	<ion-navbar>
 		<div class="disp-flex-header">
 			<ion-icon menuToggle name="menu" class="app-menu-toggle"></ion-icon>
 			<ion-title class="margin-left-45">Home</ion-title>
-			<span class="pull-right header-cart cursor-pointer" (click)="appService.redirectToShoppingCartPage()">
-				<ion-icon ios="ios-cart" md="md-cart"></ion-icon>
-				<sub class="">{{appService.cartCount}}</sub>
+			<span class="pull-right header-cart cursor-pointer disp-flex-center-y" (click)="appService.redirectToShoppingCartPage()">
+				<small class="margin-right-5" *ngIf="appService.cartCount">Check Out</small>
+				<ion-icon class="margin-right-5" ios="ios-cart" md="md-cart"></ion-icon>
+				<small>{{appService.cartCount || "0"}}</small>
 			</span>
 		</div>
 	</ion-navbar>
@@ -16,7 +17,7 @@
 		<img class="loading-image" src="assets/imgs/loading-image-2.gif" />
 	</article> -->
 	<section class="home-wrapper" [hidden]="pageLoading">
-		<section class="home-page-top-slider"  id="home-page-slider">			
+		<section class="home-page-top-slider"  id="home-page-slider">
 			<div class="swiper-container">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide" *ngFor="let bannerImage of bannerImagesList" >

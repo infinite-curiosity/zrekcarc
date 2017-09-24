@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { Events } from 'ionic-angular';
 
 import { AppService } from "./app.service";
@@ -22,37 +21,41 @@ import { WishlistPage } from '../pages/wishlist/wishlist';
 export class MyApp {
   @ViewChild(Nav) nav;
   rootPage:any = HomePage;
-  public hasLoggedIn = true;
+  public slideOutLoginPopup = true;
   public showLoading = true;
   public userId = null;
   public myApp = this;
-  constructor(public appService: AppService, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public events : Events, public toastCtrl: ToastController) {
+  constructor(public appService: AppService, platform: Platform, statusBar: StatusBar,public events : Events, public toastCtrl: ToastController) {
       statusBar.styleDefault();
-      splashScreen.hide();
       appService.openPage = this.openPage;
       appService.myApp = this.myApp;
-      events.subscribe('logIn', (status,userId,userName) => {
-          this.processLoginInfo(status,userId,userName);
+      events.subscribe('logIn', (status,userId,userName,isAdmin) => {
+          this.processLoginInfo(status,userId,userName,isAdmin);
       });
       events.subscribe('showLogInScreen', (status) => {
-          this.hasLoggedIn = !status;
-      });        
+          this.slideOutLoginPopup = !status;
+      });
       events.subscribe('showLoading', (status) => {
         this.showLoading = status;
     });
   }
 
-  processLoginInfo(status, userId, userName){
-    //ToDo : rename hasLogginIn to slideOutLoginPopup everywhere
-    this.hasLoggedIn = status;
+  processLoginInfo(status, userId, userName, isAdmin){
+    //ToDo : rename hasLoggedIn to slideOutLoginPopup everywhere
+    this.slideOutLoginPopup = status;
     this.userId = userId;
     this.appService.setUserId(userId);
     this.appService.setUserName(userName);
+    this.appService.setIsAdmin(isAdmin);
+    if(this.appService.getIsAdmin()){
+      this.nav.setRoot(OrderHistoryPage);
+    };
   }
 
   doLogout(){
-    this.processLoginInfo(true,null,null);
+    this.processLoginInfo(true,null,null,false);
     this.presentToast("You've been Logged out :(");
+    this.openPage('homePage')
   }
 
   presentToast(msg) {
@@ -76,7 +79,7 @@ export class MyApp {
     switch (page) {
        case "loginPage":
          //this.nav.push(LoginPage);
-         this.hasLoggedIn = false;
+         this.slideOutLoginPopup = false;
         break;
       case "showLoading":
         this.nav.push(ShowLoading);
@@ -95,21 +98,21 @@ export class MyApp {
             this.events.publish('showLogInScreen',true);
         }	else{
           this.nav.push(ShoppingCartPage);
-        }        
+        }
         break;
       case "orderHistoryPage":
         if(!(this.appService.getUserId() > 0)){
             this.events.publish('showLogInScreen',true);
         }	else{
           this.nav.push(OrderHistoryPage);
-        }         
+        }
         break;
       case "wishlistPage":
         if(!(this.appService.getUserId() > 0)){
             this.events.publish('showLogInScreen',true);
         }	else{
           this.nav.push(WishlistPage);
-        }                 
+        }
         break;
       case "signupPage":
          this.nav.push(LoginPage);

@@ -7,6 +7,9 @@ import { Events } from 'ionic-angular';
 export class AppService {
     private userId;
     private userName;
+    private isAdmin;
+    public categoriesList;
+    public brandsList;
     private baseUrl;
     public cartCount;
     public openPage;
@@ -20,7 +23,7 @@ export class AppService {
     }
     setUserId(userId){
         if(!userId){
-            this.userId = -1;    
+            this.userId = -1;
         }
         else{
             this.userId = userId;
@@ -31,7 +34,25 @@ export class AppService {
         return this.userName;
     }
     setUserName(userName){
-        this.userName = userName;        
+        this.userName = userName;
+    }
+    getIsAdmin(){
+        return this.isAdmin;
+    }
+    setIsAdmin(isAdmin){
+        this.isAdmin = isAdmin;
+    }
+    getBrandsList(){
+        return this.brandsList;
+    }
+    setBrandsList(brandsList){
+        this.brandsList = brandsList;
+    }
+    getCategoriesList(){
+        return this.categoriesList;
+    }
+    setCategoriesList(categoriesList){
+        this.categoriesList = categoriesList;
     }
     getBaseUrl(){
         return this.baseUrl;
@@ -39,6 +60,7 @@ export class AppService {
     setBaseUrl(baseUrl){
         this.baseUrl = baseUrl;
     }
+
     getCartCount(){
         return this.cartCount;
     }
@@ -60,7 +82,7 @@ export class AppService {
                 }
             }else{
 
-            }    
+            }
         });
         return thisObservable;
     }
@@ -71,11 +93,11 @@ export class AppService {
         return {
             present : (() => {
                 this.events.publish("showLoading",true);
-            }),        
+            }),
             dismiss : (() => {
                 this.events.publish("showLoading",false);
             })
-        };        
+        };
     }
     getToastSettings(){
         return {
@@ -84,57 +106,5 @@ export class AppService {
             closeButtonText : "x",
             position: "bottom"
         }
-    }
-    getLoadingRefIonic() {
-        let loading = this.loadingCtrl.create({
-            spinner: 'hide',
-            dismissOnPageChange: true,
-            content: `
-                    <div class="app-loading">
-                        <main>
-                            <div class="dank-ass-loader">
-                              <div class="row">
-                                 <div class="arrow up outer outer-18"></div>
-                                 <div class="arrow down outer outer-17"></div>
-                                 <div class="arrow up outer outer-16"></div>
-                                 <div class="arrow down outer outer-15"></div>
-                                 <div class="arrow up outer outer-14"></div>
-                              </div>
-                              <div class="row">
-                                 <div class="arrow up outer outer-1"></div>
-                                 <div class="arrow down outer outer-2"></div>
-                                 <div class="arrow up inner inner-6"></div>
-                                 <div class="arrow down inner inner-5"></div>
-                                 <div class="arrow up inner inner-4"></div>
-                                 <div class="arrow down outer outer-13"></div>
-                                 <div class="arrow up outer outer-12"></div>
-                              </div>
-                              <div class="row">
-                                 <div class="arrow down outer outer-3"></div>
-                                 <div class="arrow up outer outer-4"></div>
-                                 <div class="arrow down inner inner-1"></div>
-                                 <div class="arrow up inner inner-2"></div>
-                                 <div class="arrow down inner inner-3"></div>
-                                 <div class="arrow up outer outer-11"></div>
-                                 <div class="arrow down outer outer-10"></div>
-                              </div>
-                              <div class="row">
-                                 <div class="arrow down outer outer-5"></div>
-                                 <div class="arrow up outer outer-6"></div>
-                                 <div class="arrow down outer outer-7"></div>
-                                 <div class="arrow up outer outer-8"></div>
-                                 <div class="arrow down outer outer-9"></div>
-                              </div>
-                            </div>
-                        </main>
-                    </div>
-                `
-            });
-
-        /*loading.onDidDismiss(() => {
-            console.log('Dismissed loading');
-        });*/
-
-        return loading;
     }
 }

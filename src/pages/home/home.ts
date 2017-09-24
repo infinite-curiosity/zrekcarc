@@ -21,13 +21,13 @@ export class HomePage {
 	public loadingRef;
 	public homeSlider;
 	public showHomeSlider;
-		
+
 	@ViewChild(CrackerItem) crackerItem: CrackerItem;
 
-	//@ViewChild(Slides) slides: Slides;		
+	//@ViewChild(Slides) slides: Slides;
 
 	constructor(public navCtrl: NavController, private http: Http, public platform: Platform, public events : Events, public appService : AppService) {
-		this.loadingRef = this.appService.getLoadingRef();		
+		this.loadingRef = this.appService.getLoadingRef();
 		this.initHomePage();
 	}
 
@@ -39,35 +39,32 @@ export class HomePage {
 	ionViewWillLeave(){
 		//this.showHomeSlider = false;
 	}
-	
+
 	initHomePage(){
 		this.fetchData();
-	}	
-	
+	}
+
 	initCarouselSlide(){
-		//document.getElementById('home-page-slider').style.marginTop = document.getElementById('header-handle').offsetHeight + "px";					
+		//document.getElementById('home-page-slider').style.marginTop = document.getElementById('header-handle').offsetHeight + "px";
 		// if (this.platform.is('ios')) {
-		// 	document.getElementById('home-page-slider').style.marginTop = "64px";		
+		// 	document.getElementById('home-page-slider').style.marginTop = "64px";
 		// }
 		// else{
-		// 	document.getElementById('home-page-slider').style.marginTop = "56px";						
+		// 	document.getElementById('home-page-slider').style.marginTop = "56px";
 		// }
 		this.homeSlider = new Swiper ('.swiper-container', {
 			direction: 'horizontal',
-			loop: true,		
-			pagination: '.swiper-pagination',		
+			loop: true,
+			pagination: '.swiper-pagination',
 			// nextButton: '.swiper-button-next',
 			// prevButton: '.swiper-button-prev',
 			 autoplay : 2000,
-			// speed : 750,			
+			// speed : 750,
 			// effect : 'cube',
 			// initialSlide : 0,
 			autoHeight : true,
 			//paginationClickable : true
-		});   
-		setTimeout(()=>{
-			this.loadingRef.dismiss();	
-		},1000);
+		});
 	}
 
   	fetchData(){
@@ -91,16 +88,18 @@ export class HomePage {
 			});
   	}
 
-  	processInitData(data){  		
+  	processInitData(data){
+		this.bannerImagesList = data.bannerImages;
+		this.initCarouselSlide();
 		this.categoriesList = data.categories;
 		this.noOfItemsInCart = data.noOfItemsInCart;
 		this.brandsList = data.brands;
 		this.newArrivalsList = data.newArrivals;
 		this.discountList = data.discounted;
-		this.bannerImagesList = data.bannerImages;		
-		setTimeout(()=>{
-			this.initCarouselSlide();			
-		},100);		
+		this.loadingRef.dismiss();
+		this.appService.setBrandsList(data.brands);
+		this.appService.setCategoriesList(data.categories);
+		this.appService.setCartCount(data.noOfItemsInCart);
   	}
 
 

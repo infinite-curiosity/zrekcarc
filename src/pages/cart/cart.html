@@ -12,10 +12,10 @@
 	<section class="shopping-cart-wrapper" *ngIf="cartList.length && !loading">
 
 	<!-- section #1 Cart Summary & Coupon -->
-		<section *ngIf="!sectionOnDisplay">			
+		<section *ngIf="!sectionOnDisplay">
 			<ion-list class="cart-list-wrapper">
 				<ion-item *ngFor="let item of cartList">
-					
+
 					<div class="each-cart-item">
 						<!-- <ion-thumbnail item-start item-left>
 							<img class="card-img" src="{{item.imageUrl|| 'assets/imgs/home-bg-1.jpg'}}" (click)="redirectToProductDetails(item)" />
@@ -32,10 +32,10 @@
 										<span>{{item.cartQuantity || "0"}}</span>
 									</button>
 								</div>
-								<button ion-button color="secondary" class="qty-action"(click)="addToCart(item)">+</button>								
+								<button ion-button color="secondary" class="qty-action"(click)="addToCart(item)">+</button>
 							</div>
 							<hr/>
-							<div>								
+							<div>
 								<p class="margin-top-10 text-center">Rs. {{item.totalAmount || "0"}}</p>
 							</div>
 						</div>
@@ -124,42 +124,49 @@
 
 						<ion-item>
 							<ion-label floating>Address Line 1 </ion-label>
-							<ion-input type="text" [(ngModel)]="newAddress.addressLine1"></ion-input>
+							<ion-input type="text" [(ngModel)]="newAddress.addressLine1" (change)="validateText(newAddress.addressLine1,'addressLine1Invalid')" ></ion-input>
 						</ion-item>
+						<ion-item *ngIf="newAddress.addressLine1Invalid" class="validation-error">Enter {{ADDRESS_MIN_LENGTH}}-{{ADDRESS_MAX_LENGTH}} characters.</ion-item>
 
 						<ion-item>
 							<ion-label floating>Address Line 2 </ion-label>
-							<ion-input type="text" [(ngModel)]="newAddress.addressLine2"></ion-input>
+							<ion-input type="text" [(ngModel)]="newAddress.addressLine2" (change)="validateText(newAddress.addressLine2,'addressLine2Invalid')"></ion-input>
 						</ion-item>
+						<ion-item *ngIf="newAddress.addressLine2Invalid" class="validation-error">Enter {{ADDRESS_MIN_LENGTH}}-{{ADDRESS_MAX_LENGTH}} characters.</ion-item>
 
 						<ion-item>
 							<ion-label floating>City</ion-label>
-							<ion-input type="text" [(ngModel)]="newAddress.city"></ion-input>
+							<ion-input type="text" [(ngModel)]="newAddress.city" (change)="validateText(newAddress.city,'cityInvalid')"></ion-input>
 						</ion-item>
+						<ion-item *ngIf="newAddress.cityInvalid" class="validation-error">Enter {{ADDRESS_MIN_LENGTH}}-{{ADDRESS_MIN_LENGTH}} characters.</ion-item>
 
 						<ion-item>
 							<ion-label floating>State</ion-label>
-							<ion-input type="text" [(ngModel)]="newAddress.state"></ion-input>
+							<ion-input type="text" [(ngModel)]="newAddress.state" (change)="validateText(newAddress.state,'stateInvalid')"></ion-input>
 						</ion-item>
+						<ion-item *ngIf="newAddress.stateInvalid" class="validation-error">Enter {{ADDRESS_MIN_LENGTH}}-{{ADDRESS_MIN_LENGTH}} characters.</ion-item>
 
 						<ion-item>
 							<ion-label floating>Pin Code</ion-label>
-							<ion-input type="number" [(ngModel)]="newAddress.pinCode"></ion-input>
+							<ion-input type="number" [(ngModel)]="newAddress.pinCode" (change)="validatePinCode(newAddress.pinCode,'pinCodeInvalid')" maxlength="6"></ion-input>
 						</ion-item>
+						<ion-item *ngIf="newAddress.pinCodeInvalid" class="validation-error">Enter a valid pincode</ion-item>
 
 						<ion-item>
 							<ion-label floating>Contact No</ion-label>
-							<ion-input type="number" [(ngModel)]="newAddress.contactNo"></ion-input>
+							<ion-input type="number" [(ngModel)]="newAddress.contactNo" (change)="validateMobileNo(newAddress.contactNo,'contactNoInvalid')" maxlength="10"></ion-input>
 						</ion-item>
+						<ion-item *ngIf="newAddress.contactNoInvalid" class="validation-error">Enter a valid phone No</ion-item>
 
 						<ion-item>
 							<ion-label floating>Alternate Contact No</ion-label>
-							<ion-input type="number" [(ngModel)]="newAddress.alternateContact"></ion-input>
+							<ion-input type="number" [(ngModel)]="newAddress.alternateContact" (change)="validateMobileNo(newAddress.alternateContact,'alternateContactInvalid')" maxlength="10"></ion-input>
 						</ion-item>
+						<ion-item *ngIf="newAddress.alternateContactInvalid" class="validation-error">Enter a valid phone No</ion-item>
 
 					</ion-list>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-top-10 margin-bottom-10" color="danger" ion-button (click)="onClickBackToChooseAddress()">Cancel</button>
-					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-top-10 margin-bottom-10" color="secondary" ion-button (click)="doAddAddress()">Add Address</button>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect margin-top-10 margin-bottom-10" color="secondary" ion-button (click)="doAddAddress()" [attr.disabled]="disableAddAddress() == true ? true : null" >Add Address</button>
 				</div>
 			</div>
 		</section>

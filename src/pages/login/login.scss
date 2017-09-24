@@ -4,22 +4,28 @@ page-login {
 	.fixed-content{
 		background: rgba(0,0,0,.75);// #eee;
 	}
+	.scroll-content{
+		min-height: 100vh;
+		height: auto;
+		width: 100vw;
+	}
 	.login-signup-outer-wrapper{
 		background: transparent !important;
+		min-height: 100vh;
+		height: auto;
+		width: 100vw;
 		*{
 			font-size: 1em !important;
-		}		
+		}						
 		.login-signup-section{
 			display: flex;
 			justify-content: center;
 			align-items: center;		
 			.login-signup-form-wrapper{
 				height: auto;				
-				background: $login-signup-base !important;
-				border-radius: 15px;
+				background: $login-signup-base !important;				
 				border: 1px solid rgba(0, 0, 0, 0.3);
-				box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-				width: 85vw;	
+				box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);								
 			}		
 			.mdl-textfield__error{
 				visibility: visible !important;
@@ -46,12 +52,15 @@ page-login {
 	.login-section{
 		
 		.login-form-wrapper{
-			padding: 30px 30px 10px;	
+			width: 85vw;	
+			border-radius: 15px;
+			padding: 30px;	
 		}		
 	}	
 	.signup-section{
 		.signup-form-wrapper{
-			padding: 0 30px;	
+			width: 100vw;	
+			padding: 30px 15%;	
 		}		
 	}	
 }

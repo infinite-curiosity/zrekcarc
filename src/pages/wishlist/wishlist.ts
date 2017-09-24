@@ -24,7 +24,7 @@ export class WishlistPage {
 
 	moveToCart(item){
 		this.crackerItem.addToCart(item).subscribe((res) => {
-			this.crackerItem.unsetAsFavWithoutToat(item).subscribe((res) => {				
+			this.crackerItem.unsetAsFavWithoutToat(item).subscribe((res) => {
 				this.fetchWishlist();
 				this.presentToast(item.productName + " has been moved to cart");
 			});
@@ -53,13 +53,11 @@ export class WishlistPage {
 				}else{
 
 				}
-				setTimeout(() => {
-					  this.loadingRef.dismiss();
-					  this.loading = false;
-				}, 1000);
+				this.loadingRef.dismiss();
+				this.loading = false;
 			});
 	}
-	  
+
 	presentToast(msg) {
 		let toast = this.toastCtrl.create({
 			message: msg,

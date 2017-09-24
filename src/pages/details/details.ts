@@ -1,5 +1,5 @@
-import { Component, ViewChild  } from '@angular/core';
-import { NavParams, Slides, ToastController } from 'ionic-angular';
+import { Component  } from '@angular/core';
+import { NavParams, Events, ToastController } from 'ionic-angular';
 import { Http } from '@angular/http';
 
 import { AppService } from "../../app/app.service";
@@ -9,12 +9,12 @@ import { AppService } from "../../app/app.service";
   	templateUrl: 'details.html'
 })
 export class DetailsPage {
-	@ViewChild(Slides) slides: Slides;
 	public isInWishList;
 	public isInCart;
 	public cartQuantity;
 	public ratingByUser=0;
 	public reviewTextByUser;
+	public reviewTextByUserInvalid;
 	public productDetail;
 	public pageLoading;
 	public productImages;
@@ -29,9 +29,11 @@ export class DetailsPage {
 	public showDtlsSlider;
 	public averageReview;
 	public reviews;
+	public REVIEW_MIN_LENGTH = 4;
+	public REVIEW_MAX_LENGTH = 2000;
 
 
-	constructor(private http: Http, public navParams: NavParams, private toastCtrl: ToastController, public appService : AppService) {
+	constructor(private http: Http, public navParams: NavParams, private toastCtrl: ToastController, public appService : AppService, public events : Events) {
 		this.pageLoading = true;
 		this.loadingRef = this.appService.getLoadingRef();
 		this.self = this;
@@ -56,37 +58,15 @@ export class DetailsPage {
 		that.fetchData();
 	}
 
-	goToSlide() {
-		this.slides.slideTo(2, 500);
-	}
-
-	slideChanged() {
-		let currentIndex = this.slides.getActiveIndex();
-		console.log('Current index is', currentIndex);
-	}
-
-	initCarouselSlide(){
-		this.dtlsSlider = new Swiper ('.swiper-container', {
-			direction: 'horizontal',
-			//loop: true,		
-			pagination: '.swiper-pagination',		
-			// nextButton: '.swiper-button-next',
-			// prevButton: '.swiper-button-prev',
-			// autoplay : 2000,
-			// speed : 750,			
-			// effect : 'cube',
-			// initialSlide : 0,
-			// //autoHeight : true,
-			//paginationClickable : true
-		  });        	
-		  console.info("productImages",this.productImages);
-	}
-
 	setRating(starValue){
 		this.ratingByUser = starValue;
 	}
 
 	submitReview(){
+		if(!(this.appService.getUserId() > 0)){
+			this.events.publish('showLogInScreen',true);
+			return;
+        }
 		var serviceUrl = this.appService.getBaseUrl()+"/store/addReview";
 		var request = {
 			"uid" : Number(this.appService.getUserId()),
@@ -102,7 +82,7 @@ export class DetailsPage {
 					this.presentToast("Review submitted successfully");
 					this.fetchData();
 					this.ratingByUser = 0;
-					this.reviewTextByUser = null;					
+					this.reviewTextByUser = null;
 				}else{
 
 				}
@@ -165,17 +145,32 @@ export class DetailsPage {
 		this.price = data.price;
 		this.netPrice = data.netPrice.toFixed(2);
 		this.productImages = data.images;
-		this.averageReview = data.averageReview;		  
-  		this.initCarouselSlide();
+		this.averageReview = data.averageReview;
   		this.isStockAvailable = data.isStockAvailable;
 		this.isInCart = data.isInCart;
 		this.reviews = data.reviews;
   		(data.cartQuantity) ? this.cartQuantity = data.cartQuantity : function(){};
   		(data.isInWishList) ? this.isInWishList = data.isInWishList : function(){};
-  		setTimeout(() => {
-		  	this.loadingRef.dismiss();
-		}, 1000);
+		this.loadingRef.dismiss();
   	}
+
+	validateReviewText(){;
+		if(!this.reviewTextByUser){
+			this.reviewTextByUserInvalid = false;
+			return (true);
+		}
+		else if(this.reviewTextByUser && ( this.reviewTextByUser.length >= this.REVIEW_MIN_LENGTH) && ( this.reviewTextByUser.length <= this.REVIEW_MAX_LENGTH)){
+			this.reviewTextByUserInvalid = false;
+			return (true);
+		}
+		this.reviewTextByUserInvalid = true;
+		return (false);
+	}
+
+	disableSubmitReview(){
+		var valid = Boolean(this.ratingByUser) && !this.reviewTextByUserInvalid ;
+		return !valid;
+	}
 
   	presentToast(msg) {
 		let toast = this.toastCtrl.create({

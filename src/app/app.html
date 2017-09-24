@@ -1,4 +1,4 @@
-<div class="login-screen" [ngClass]="{'slide-in' : !hasLoggedIn, 'slide-out': hasLoggedIn}">
+<div class="login-screen" [ngClass]="{'slide-in' : !slideOutLoginPopup, 'slide-out': slideOutLoginPopup}">
 	<page-login class="full-height"></page-login>
 </div>
 
@@ -24,19 +24,20 @@
     <!-- <img class="loading-image" src="assets/imgs/loading-image-2.gif" /> -->
     <img class="loading-image" src="assets/imgs/diwali.jpg" />
     <ion-list>
-      <button menuToggle ion-item (click)="openPage('homePage')">
+      <button menuToggle ion-item (click)="openPage('homePage')" *ngIf="!(appService.getIsAdmin())">
         Home
       </button>
-      <button menuToggle ion-item (click)="openPage('listingPage')">
+      <button menuToggle ion-item (click)="openPage('listingPage')" *ngIf="!(appService.getIsAdmin())">
         Explore
       </button>
-      <button menuToggle ion-item (click)="openPage('shoppingCartPage')">
+      <button menuToggle ion-item (click)="openPage('shoppingCartPage')" *ngIf="!(appService.getIsAdmin())">
         Shopping Cart
       </button>
        <button menuToggle ion-item (click)="openPage('orderHistoryPage')">
-        My Orders
+        <span  *ngIf="!(appService.getIsAdmin())">My Orders</span>
+        <span  *ngIf="(appService.getIsAdmin())">Admin Dashboard</span>
       </button>
-       <button menuToggle ion-item (click)="openPage('wishlistPage')">
+       <button menuToggle ion-item (click)="openPage('wishlistPage')" *ngIf="!(appService.getIsAdmin())">
         Wish List
       </button>
       <!-- <button menuToggle ion-item (click)="openPage('myAccountPage')">

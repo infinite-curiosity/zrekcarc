@@ -20,8 +20,8 @@ export class ListingPage {
 
 	constructor(public navCtrl: NavController, private http: Http, public navParams: NavParams, public appService : AppService, public popoverCtrl: PopoverController) {
 		this.productList = [];
-		this.categoriesList = [];
-		this.brandsList = [];
+		this.brandsList = this.appService.getBrandsList();
+		this.categoriesList = this.appService.getCategoriesList();
 		this.loadingRef = this.appService.getLoadingRef();
 		this.sortSelectOptions = {
 		  title: 'Sort By'
@@ -48,18 +48,19 @@ export class ListingPage {
 			// 	title : 'None'
 			// }
 		];
-		this.fetchCategoriesAndBrands();
+		this.fetchData(this.navParams.data);
 	}
 
 	ionViewWillEnter(){
-		//this.fetchCategoriesAndBrands();
+
 	}
 
 	ionViewWillLeave(){
-		
+
 	}
 
   	fetchData(routeParams){
+		this.loadingRef.present();
 		var serviceUrl = this.appService.getBaseUrl()+"/store/getProductList";
 		var request = {
 			uid: this.appService.getUserId(),
@@ -136,32 +137,6 @@ export class ListingPage {
   	processListingData(data){
   		this.productList = data.products;
 		this.loadingRef.dismiss();
-  	}
-
-  	fetchCategoriesAndBrands(){
-  		this.loadingRef.present();
-  		var request = {
-  			"uid" : Number(this.appService.getUserId())
-  		};
-		var serviceUrl = this.appService.getBaseUrl()+"/store/getDashboardItems";
-		this.http
-			.post(serviceUrl,request)
-			.map(res => res.json())
-			.subscribe(res => {
-				console.info("response",res);
-				this.processCategoriesAndBrandsData(res.data);
-				/*if(res.response===200){
-					this.events.publish('logIn', true);
-				}else{
-					this.events.publish('logIn', true);//false);
-				}		  				  		  		*/
-			});
-  	}
-
-  	processCategoriesAndBrandsData(data){
-  		this.categoriesList = data.categories;
-		this.brandsList = data.brands;
-		this.fetchData(this.navParams.data);
   	}
 
   	openFilterPopover(myEvent) {

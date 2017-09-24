@@ -40,13 +40,13 @@ $theme-secondary : $youtube-red;//$pink-theme;
 .login-screen{
 	height: 0;
 	transition : top 300 ease-in;
-	position: relative;  
+	position: relative;
 	top: -100vh;
 	z-index: 9999;
 }
 .slide-in{
 	height: 100vh;
-	top: 0;	
+	top: 0;
 }
 .slide-out{
 	top: -100vh;
@@ -71,6 +71,11 @@ $theme-secondary : $youtube-red;//$pink-theme;
 	justify-content: center !important;
 	align-items: center !important;
 	text-align: center !important;
+}
+.disp-flex-center-y{
+	display: flex;
+	justify-content: flex-start !important;
+	align-items: center !important;
 }
 .disp-flex-header{
 	display: flex;
@@ -141,6 +146,9 @@ $theme-secondary : $youtube-red;//$pink-theme;
 }
 .margin-right-10{
 	margin-right:10px;
+}
+.margin-left-45{
+	margin-left : 45px;
 }
 .white-space-nowrap{
 	white-space:nowrap;
