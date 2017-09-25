@@ -28,6 +28,7 @@ import { CrackerItem } from '../pages/product/product';
 import { FilterComponent } from '../pages/filter/filter';
 
 import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 //import {Observable} from "rxjs/Rx";
 
 @NgModule({
@@ -79,6 +80,7 @@ import { StatusBar } from '@ionic-native/status-bar';
   providers: [
     AppService,
     StatusBar,
+    SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

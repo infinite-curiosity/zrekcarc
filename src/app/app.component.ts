@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav, ToastController } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Events } from 'ionic-angular';
 
@@ -25,8 +26,13 @@ export class MyApp {
   public showLoading = true;
   public userId = null;
   public myApp = this;
-  constructor(public appService: AppService, platform: Platform, statusBar: StatusBar,public events : Events, public toastCtrl: ToastController) {
-      statusBar.styleDefault();
+  constructor(public appService: AppService, platform: Platform, public splashScreen: SplashScreen, statusBar: StatusBar,public events : Events, public toastCtrl: ToastController) {
+      platform.ready().then(() => {
+        //setTimeout(() => {
+          statusBar.styleDefault();
+          this.hideSplashScreen();
+        //}, 100);
+      });
       appService.openPage = this.openPage;
       appService.myApp = this.myApp;
       events.subscribe('logIn', (status,userId,userName,isAdmin) => {
@@ -38,6 +44,14 @@ export class MyApp {
       events.subscribe('showLoading', (status) => {
         this.showLoading = status;
     });
+  }
+
+  hideSplashScreen() {
+    if (this.splashScreen) {
+      setTimeout(() => {
+        this.splashScreen.hide();
+      }, 100);
+    }
   }
 
   processLoginInfo(status, userId, userName, isAdmin){
