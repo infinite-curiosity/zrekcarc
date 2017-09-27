@@ -17,30 +17,6 @@
 		<h2 class="text-center">
 			{{productName}}  <small> | {{brand}}</small>
 		</h2>
-		<section class="dtls-page-top-slider"  id="dtls-page-slider" *ngIf="showDtlsSlider && false">
-			<div class="swiper-container">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide" *ngFor="let slide of productImages" >
-						<img src="{{slide.imageUrl}}" class="slide-image"/>
-						<!-- <div class="product-slider-discount" *ngIf="discountPercentage">
-							<span class="disp-inline-block discount-circle">{{discountPercentage}}%<br/>off</span>
-						</div>
-						<div class="product-slider-wishlist" *ngIf="discountPercentage">
-							<button ion-button icon-only color="danger" class="wishlist-button is-not-in-wishlist" (click)="setAsFav(self)" *ngIf="!isInWishList">
-								<ion-icon name="md-heart-outline" (isActive)='false'></ion-icon>
-							</button>
-
-							<button ion-button icon-only color="danger" class="wishlist-button is-in-wishlist" (click)="unsetAsFav(self)" *ngIf="isInWishList">
-								<ion-icon name="md-heart" (isActive)='false'></ion-icon>
-							</button>
-						</div> -->
-					</div>
-				</div>
-				<div class="swiper-pagination"></div>
-				<!-- <div class="swiper-button-prev"></div>
-				<div class="swiper-button-next"></div> -->
-			</div>
-		</section>
 		<section class="details-page-product-slider">
 			<ion-scroll scrollX="true" class="card-section-lg-wrapper">
 				<div class="card-section-inner-wrapper">

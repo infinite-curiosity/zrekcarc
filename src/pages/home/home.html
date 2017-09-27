@@ -12,12 +12,11 @@
 	</ion-navbar>
 </ion-header>
 <ion-content>
-	<!-- <button ion-button block menuToggle>Toggle Menu</button> -->
-	<!-- <article [hidden]="!pageLoading">
-		<img class="loading-image" src="assets/imgs/loading-image-2.gif" />
-	</article> -->
 	<section class="home-wrapper" [hidden]="pageLoading">
-		<section class="home-page-top-slider"  id="home-page-slider">
+		<article class="home-page-top-slider home-page-top-slider-loading" [hidden]="showHomeSlider">
+			<div class="animated-background"></div>
+		</article>
+		<section class="home-page-top-slider"  id="home-page-slider" [hidden]="!showHomeSlider">
 			<div class="swiper-container">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide" *ngFor="let bannerImage of bannerImagesList" >

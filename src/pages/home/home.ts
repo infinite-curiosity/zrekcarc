@@ -41,6 +41,7 @@ export class HomePage {
 	}
 
 	initHomePage(){
+		this.showHomeSlider = false;
 		this.fetchData();
 	}
 
@@ -62,12 +63,15 @@ export class HomePage {
 			// speed : 750,
 			// effect : 'cube',
 			// initialSlide : 0,
-			autoHeight : true,
 			//paginationClickable : true
 		});
+		setTimeout(()=>{
+			this.showHomeSlider = true;
+		},100);
 	}
 
   	fetchData(){
+		this.showHomeSlider = false;
 		this.loadingRef.present();
 		this.pageLoading = true;
   		var request = {
@@ -90,7 +94,6 @@ export class HomePage {
 
   	processInitData(data){
 		this.bannerImagesList = data.bannerImages;
-		this.initCarouselSlide();
 		this.categoriesList = data.categories;
 		this.noOfItemsInCart = data.noOfItemsInCart;
 		this.brandsList = data.brands;
@@ -100,6 +103,9 @@ export class HomePage {
 		this.appService.setBrandsList(data.brands);
 		this.appService.setCategoriesList(data.categories);
 		this.appService.setCartCount(data.noOfItemsInCart);
+		setTimeout(()=>{
+			this.initCarouselSlide();
+		},1000)
   	}
 
 
@@ -132,9 +138,10 @@ export class HomePage {
   		var filterEntity = {
   			field : 'brand',
   			itemList : []
-   		};
+		   };
+		var filteredList;
   		if(brand){
-  			var filteredList = this.brandsList.map(function(item){
+  			filteredList = this.brandsList.map(function(item){
   				if(brand.id == item.id){
 					item.checked = true;
   				}else{
@@ -144,7 +151,7 @@ export class HomePage {
   			});
   			filterEntity.itemList = filteredList;
   		}else{
-  			var filteredList = this.brandsList.map(function(item){
+  			filteredList = this.brandsList.map(function(item){
 				item.checked = true;
 				return item;
   			});

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { LoadingController  } from 'ionic-angular';
 import { Events } from 'ionic-angular';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class AppService {

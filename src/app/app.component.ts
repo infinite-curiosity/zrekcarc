@@ -69,7 +69,7 @@ export class MyApp {
   doLogout(){
     this.processLoginInfo(true,null,null,false);
     this.presentToast("You've been Logged out :(");
-    this.openPage('homePage')
+    this.openPage('homePage');
   }
 
   presentToast(msg) {
