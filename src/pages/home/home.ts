@@ -42,6 +42,7 @@ export class HomePage {
 
 	initHomePage(){
 		this.showHomeSlider = false;
+		this.initCarouselSlide();
 		this.fetchData();
 	}
 
@@ -103,9 +104,6 @@ export class HomePage {
 		this.appService.setBrandsList(data.brands);
 		this.appService.setCategoriesList(data.categories);
 		this.appService.setCartCount(data.noOfItemsInCart);
-		setTimeout(()=>{
-			this.initCarouselSlide();
-		},1000)
   	}
 
 
