@@ -1,6 +1,9 @@
 <section class="product-card-outer-wrapper">
 	<ion-card class="product-card-inner-wrapper" *ngIf="item">
-		<img class="card-img" src="{{item.imageUrl|| 'assets/imgs/home-bg-1.jpg'}}" (click)="redirectToProductDetails(item)" />
+		<img [hidden]="!item.imageLoaded" class="card-img" src="{{item.imageUrl|| 'assets/imgs/home-bg-1.jpg'}}" (click)="redirectToProductDetails(item)" />
+		<article [hidden]="item.imageLoaded" class="home-page-top-slider placeholder-loading card-img-loading" [hidden]="showHomeSlider">
+			<div class="animated-background"></div>
+		</article>
 		<ion-card-content class="card-content-override" (click)="redirectToProductDetails(item)">
 			<ion-card-title class="product-name ellipse">
 	  			{{item.productName}}
@@ -36,7 +39,7 @@
 		<ion-card-content class="ion-card-content-override footer-section">
 			<div class="action-footer">
 				<button ion-button color="secondary" class="add-to-cart" (click)="removeFromCart(item)">
-					<ion-icon ios="ios-remove-circle" md="md-remove-circle"></ion-icon>					
+					<ion-icon ios="ios-remove-circle" md="md-remove-circle"></ion-icon>
 				</button>
 				<div class="cart-quantity">
 					<ion-icon class="disp-inline-block" ios="ios-cart" md="md-cart"></ion-icon>

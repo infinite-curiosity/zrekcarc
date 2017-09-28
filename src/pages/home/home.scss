@@ -6,28 +6,6 @@ page-home {
 	.home-page-top-slider{
 		height: $home-page-slider-height;
 	}
-	.home-page-top-slider-loading{
-		.animated-background {
-			animation-duration: 1s;
-			animation-fill-mode: forwards;
-			animation-iteration-count: infinite;
-			animation-name: placeHolderShimmer;
-			animation-timing-function: linear;
-			background: #f6f7f8;
-			background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-			background-size: 800px 104px;
-			height: $home-page-slider-height;
-			position: relative;
-		}
-		@keyframes placeHolderShimmer{
-			0%{
-				background-position: -468px 0
-			}
-			100%{
-				background-position: 468px 0
-			}
-		}
-	}
 	ion-content{
 		background : $dark-grey-theme !important;
 	}

@@ -13,14 +13,14 @@
 </ion-header>
 <ion-content>
 	<section class="home-wrapper" [hidden]="pageLoading">
-		<article class="home-page-top-slider home-page-top-slider-loading" [hidden]="showHomeSlider">
+		<article class="home-page-top-slider placeholder-loading" [hidden]="showHomeSlider">
 			<div class="animated-background"></div>
 		</article>
-		<section class="home-page-top-slider"  id="home-page-slider" [hidden]="!showHomeSlider">
-			<div class="swiper-container">
+		<section class="home-page-top-slider"  id="home-page-slider" *ngIf="showHomeSlider">
+			<div class="home-swiper-container swiper-container">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide" *ngFor="let bannerImage of bannerImagesList" >
-						<img class="home-slider-image" src = "{{bannerImage}}"/>
+					<div class="swiper-slide" *ngFor="let obj of bannerImagesList" >
+						<img class="home-slider-image" src = "{{obj.src}}"/>
 					</div>
 				</div>
 				<div class="swiper-pagination"></div>

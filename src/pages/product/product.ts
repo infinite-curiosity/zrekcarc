@@ -16,20 +16,25 @@ let self;
 export class CrackerItem {
 	@Input() data;
 	public item;
-	
+
 	constructor(public navCtrl: NavController, private http: Http, platform: Platform, public events : Events, private toastCtrl: ToastController, public appService : AppService) {
 		self = this;
 	}
 
 	ngAfterContentInit() {
+		var img = new Image();
+		img.src= this.data.imageUrl;
+		img.onload = ()=>{
+			this.data.imageLoaded = true;
+		};
 		this.item = this.data;
 	}
 
-	setAsFav(item){		
+	setAsFav(item){
 		if(!(this.appService.getUserId() > 0)){
 			this.events.publish('showLogInScreen',true);
 			return Observable.throw('Login required!');
-		}		
+		}
 		(!item) ? item = self : function(){};
 		item.isInWishList = true;
 		self.presentToast(item.productName + " added to wishlist");
@@ -59,7 +64,7 @@ export class CrackerItem {
 		if(!(this.appService.getUserId() > 0)){
 			this.events.publish('showLogInScreen',true);
 			return Observable.throw('Login required!');
-		}		
+		}
 		(!item) ? item = self : function(){};
 		item.isInWishList = false;
 		self.presentToast(item.productName + " removed from wishlist");
@@ -96,7 +101,7 @@ export class CrackerItem {
 		if(!(this.appService.getUserId() > 0)){
 			this.events.publish('showLogInScreen',true);
 			return Observable.throw('Login required!');
-		}		
+		}
 		(!item) ? item=this : function(){};
 		(!item.cartQuantity) ? item.cartQuantity = 1 : item.cartQuantity += 1;
 		return this.updateCart(item);
@@ -106,7 +111,7 @@ export class CrackerItem {
 		if(!(this.appService.getUserId() > 0)){
 			this.events.publish('showLogInScreen',true);
 			return Observable.throw('Login required!');
-		}		
+		}
 		(!item) ? item=this : function(){};
 		(!item.cartQuantity) ? item.cartQuantity = 0 : item.cartQuantity -= 1;
 		return this.updateCart(item);

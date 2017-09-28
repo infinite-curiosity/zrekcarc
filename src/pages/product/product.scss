@@ -20,7 +20,10 @@ cracker-item {
 				height: 125px;
 				width: 125px;
 			}
-			//over-ride	card-content
+			.card-img-loading{
+				height: 125px;
+				width: 125px;
+			}
 			.card-content-override{
 				padding: 0;
 				background: $gs-32;

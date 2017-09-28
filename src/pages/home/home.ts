@@ -5,6 +5,7 @@ import { Events } from 'ionic-angular';
 import { CrackerItem } from '../product/product';
 import { ListingPage } from '../listing/listing';
 import { AppService } from "../../app/app.service";
+import "../../vendors/swiper/js/swiper.min.js";
 
 @Component({
   	selector: 'page-home',
@@ -42,7 +43,6 @@ export class HomePage {
 
 	initHomePage(){
 		this.showHomeSlider = false;
-		this.initCarouselSlide();
 		this.fetchData();
 	}
 
@@ -54,22 +54,25 @@ export class HomePage {
 		// else{
 		// 	document.getElementById('home-page-slider').style.marginTop = "56px";
 		// }
-		this.homeSlider = new Swiper ('.swiper-container', {
+		this.homeSlider = new Swiper ('.home-swiper-container', {
 			direction: 'horizontal',
 			loop: true,
 			pagination: '.swiper-pagination',
-			// nextButton: '.swiper-button-next',
-			// prevButton: '.swiper-button-prev',
 			 autoplay : 2000,
-			// speed : 750,
-			// effect : 'cube',
-			// initialSlide : 0,
-			//paginationClickable : true
+			speed : 300,
+			effect : 'slide',
+			initialSlide : 0
 		});
-		setTimeout(()=>{
-			this.showHomeSlider = true;
-		},100);
 	}
+
+	checkIfAllImagesAreLoaded(list,callback){
+		var loaded = true;
+		list.forEach((item)=>{
+			loaded = item.loaded && loaded;
+		});
+		callback(loaded);
+	}
+
 
   	fetchData(){
 		this.showHomeSlider = false;
@@ -94,7 +97,31 @@ export class HomePage {
   	}
 
   	processInitData(data){
-		this.bannerImagesList = data.bannerImages;
+		this.bannerImagesList = [];
+		data.bannerImages.forEach((imageUrl) => {
+			var obj = {
+				src : imageUrl,
+				loaded : false,
+				checkLoaded : null
+			};
+			obj.checkLoaded = (status)=>{
+				obj.loaded = status;
+				this.checkIfAllImagesAreLoaded(this.bannerImagesList,(allLoaded)=>{
+					if(allLoaded){
+						this.showHomeSlider = true;
+						setTimeout(()=>{
+							this.initCarouselSlide();
+						},100)
+					}
+				});
+			};
+			var img = new Image();
+			img.src = imageUrl;
+			img.onload = () => {
+				obj.checkLoaded(true);
+			};
+			this.bannerImagesList.push(obj);
+		});
 		this.categoriesList = data.categories;
 		this.noOfItemsInCart = data.noOfItemsInCart;
 		this.brandsList = data.brands;
@@ -108,12 +135,13 @@ export class HomePage {
 
 
   	redirectToCategory(category){
-  		var filterEntity = {
-  			field : 'category',
-  			itemList : []
-   		};
+		  var filteredList,
+			  filterEntity = {
+	  			field : 'category',
+	  			itemList : []
+	   		};
   		if(category){
-  			var filteredList = this.categoriesList.map(function(item){
+  			filteredList = this.categoriesList.map(function(item){
   				if(category.id == item.id){
 					item.checked = true;
   				}else{
@@ -123,7 +151,7 @@ export class HomePage {
   			});
   			filterEntity.itemList = filteredList;
   		}else{
-  			var filteredList = this.categoriesList.map(function(item){
+  			filteredList = this.categoriesList.map(function(item){
 				item.checked = true;
 				return item;
   			});

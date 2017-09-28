@@ -87,7 +87,7 @@
 							<p *ngIf="item.details.couponCode">{{item.details.couponCode}}</p>
 							<br *ngIf="item.details.couponCode"/>
 							<div><b>Total Amount</b></div>
-							<p><b>Rs.{{item.details.totalAmount}}</b> <small *ngIf="item.details.discountAmount">  (You saved Rs.{{item.details.discountAmount}} through discount)</small></p>
+							<p><b>Rs.{{item.details.totalAmount}}</b> <small *ngIf="item.details.discountAmount">  (You saved Rs.{{item.details.discountAmount.toFixed(0)}} through discount)</small></p>
 						</div>
 					</div>
 					<div class="view-more-less-toggle margin-top-10 margin-bottom-10">
