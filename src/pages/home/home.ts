@@ -42,7 +42,7 @@ export class HomePage {
 	}
 
 	initHomePage(){
-		this.showHomeSlider = false;
+		this.showHomeSlider = true;//false;
 		this.fetchData();
 	}
 
@@ -58,7 +58,7 @@ export class HomePage {
 			direction: 'horizontal',
 			loop: true,
 			pagination: '.swiper-pagination',
-			 autoplay : 2000,
+			autoplay : 2000,
 			speed : 300,
 			effect : 'slide',
 			initialSlide : 0
@@ -111,7 +111,7 @@ export class HomePage {
 						this.showHomeSlider = true;
 						setTimeout(()=>{
 							this.initCarouselSlide();
-						},100)
+						},100);
 					}
 				});
 			};

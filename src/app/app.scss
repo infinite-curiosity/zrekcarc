@@ -39,7 +39,7 @@ $theme-secondary : $youtube-red;//$pink-theme;
 }
 .login-screen{
 	height: 0;
-	transition : top 300 ease-in;
+	transition : top .3s ease-in-out;
 	position: relative;
 	top: -100vh;
 	z-index: 9999;
@@ -47,9 +47,12 @@ $theme-secondary : $youtube-red;//$pink-theme;
 .slide-in{
 	height: 100vh;
 	top: 0;
+	//opacity: 1;
 }
 .slide-out{
+	height: o;
 	top: -100vh;
+	//opacity: 0;
 }
 .disp-none{
 	display: none;
@@ -190,7 +193,7 @@ ion-header.header{
 }
 .placeholder-loading{
 	.animated-background {
-		animation-duration: .75s;
+		animation-duration: 1s;
 		animation-fill-mode: forwards;
 		animation-iteration-count: infinite;
 		animation-name: placeHolderShimmer;

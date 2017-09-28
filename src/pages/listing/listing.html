@@ -36,7 +36,7 @@
 		</section>
 		<div class="card-section-lg-wrapper">
 			<div class="card-section-inner-wrapper">
-				<div class="row-wrapper">
+				<div class="row-wrapper" [hidden]="pageLoading">
 					<div class="listing-card-outer-wrapper" *ngFor="let item of productList">
 						<cracker-item [data]="item"></cracker-item>
 					</div>

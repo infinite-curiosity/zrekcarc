@@ -13,7 +13,7 @@
 </ion-header>
 <ion-content>
 	<!-- <button ion-button block menuToggle>Toggle Menu</button> -->
-	<section class="details-wrapper">
+	<section class="details-wrapper" [hidden]="pageLoading">
 		<h2 class="text-center">
 			{{productName}}  <small> | {{brand}}</small>
 		</h2>

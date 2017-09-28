@@ -11,6 +11,7 @@ import { FilterComponent } from '../filter/filter';
 })
 export class ListingPage {
 	public loadingRef;
+	public pageLoading;
 	public productList;
 	public categoriesList;
 	public brandsList;
@@ -60,6 +61,7 @@ export class ListingPage {
 	}
 
   	fetchData(routeParams){
+		this.pageLoading = true;
 		this.loadingRef.present();
 		var serviceUrl = this.appService.getBaseUrl()+"/store/getProductList";
 		var request = {
@@ -135,7 +137,8 @@ export class ListingPage {
   	}
 
   	processListingData(data){
-  		this.productList = data.products;
+		this.productList = data.products;
+		this.pageLoading = false;
 		this.loadingRef.dismiss();
   	}
 
