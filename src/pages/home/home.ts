@@ -5,7 +5,6 @@ import { Events } from 'ionic-angular';
 import { CrackerItem } from '../product/product';
 import { ListingPage } from '../listing/listing';
 import { AppService } from "../../app/app.service";
-import "../../vendors/swiper/js/swiper.min.js";
 
 @Component({
   	selector: 'page-home',
@@ -25,44 +24,22 @@ export class HomePage {
 
 	@ViewChild(CrackerItem) crackerItem: CrackerItem;
 
-	//@ViewChild(Slides) slides: Slides;
-
 	constructor(public navCtrl: NavController, private http: Http, public platform: Platform, public events : Events, public appService : AppService) {
 		this.loadingRef = this.appService.getLoadingRef();
 		this.initHomePage();
 	}
 
 	ionViewWillEnter(){
-		// this.initHomePage();
-		// this.showHomeSlider = true;
+
 	}
 
 	ionViewWillLeave(){
-		//this.showHomeSlider = false;
+
 	}
 
 	initHomePage(){
-		this.showHomeSlider = true;//false;
-		this.fetchData();
-	}
 
-	initCarouselSlide(){
-		//document.getElementById('home-page-slider').style.marginTop = document.getElementById('header-handle').offsetHeight + "px";
-		// if (this.platform.is('ios')) {
-		// 	document.getElementById('home-page-slider').style.marginTop = "64px";
-		// }
-		// else{
-		// 	document.getElementById('home-page-slider').style.marginTop = "56px";
-		// }
-		this.homeSlider = new Swiper ('.home-swiper-container', {
-			direction: 'horizontal',
-			loop: true,
-			pagination: '.swiper-pagination',
-			autoplay : 2000,
-			speed : 300,
-			effect : 'slide',
-			initialSlide : 0
-		});
+		this.fetchData();
 	}
 
 	checkIfAllImagesAreLoaded(list,callback){
@@ -86,13 +63,11 @@ export class HomePage {
 			.post(serviceUrl,request)
 			.map(res => res.json())
 			.subscribe(res => {
-				this.processInitData(res.data);;
-				/*if(res.response===200){
-					this.events.publish('logIn', true);
+				if(res.response===200){
+					this.processInitData(res.data);;
 				}else{
-					this.events.publish('logIn', true);//false);
-				}		  				  		  		*/
-				this.pageLoading = false;
+
+				}
 			});
   	}
 
@@ -108,10 +83,9 @@ export class HomePage {
 				obj.loaded = status;
 				this.checkIfAllImagesAreLoaded(this.bannerImagesList,(allLoaded)=>{
 					if(allLoaded){
-						this.showHomeSlider = true;
 						setTimeout(()=>{
-							this.initCarouselSlide();
-						},100);
+							this.showHomeSlider = true;
+						},1000);
 					}
 				});
 			};
@@ -127,10 +101,11 @@ export class HomePage {
 		this.brandsList = data.brands;
 		this.newArrivalsList = data.newArrivals;
 		this.discountList = data.discounted;
-		this.loadingRef.dismiss();
 		this.appService.setBrandsList(data.brands);
 		this.appService.setCategoriesList(data.categories);
 		this.appService.setCartCount(data.noOfItemsInCart);
+		this.pageLoading = false;
+		this.loadingRef.dismiss();
   	}
 
 

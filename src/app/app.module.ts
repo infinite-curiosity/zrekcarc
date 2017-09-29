@@ -10,8 +10,7 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
-import 'swiper';
-import "../vendors/swiper/js/swiper.min.js";
+/*import "../vendors/swiper/js/swiper.min.js";*/
 
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
