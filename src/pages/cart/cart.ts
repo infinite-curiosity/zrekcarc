@@ -137,7 +137,7 @@ export class ShoppingCartPage {
 					this.loadingRef.dismiss();
 					this.loading = false;
 				}catch(e){
-					console.error("error @ ionic loading module");
+
 				}
 			}
        	);
@@ -178,7 +178,7 @@ export class ShoppingCartPage {
   				try{
 					this.loadingRef.dismiss();
 				}catch(e){
-					console.error("error @ ionic loading module");
+
 				}
   			}
   		);
@@ -208,7 +208,7 @@ export class ShoppingCartPage {
 				try{
 					this.loadingRef.dismiss();
 				}catch(e){
-					console.error("error @ ionic loading module");
+
 				}
 			}
 		);

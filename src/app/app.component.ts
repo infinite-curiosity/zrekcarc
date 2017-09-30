@@ -89,7 +89,6 @@ export class MyApp {
   }
 
   openPage(page){
-    console.info("this",this);
     switch (page) {
        case "loginPage":
          //this.nav.push(LoginPage);

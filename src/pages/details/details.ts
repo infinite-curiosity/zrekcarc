@@ -130,7 +130,6 @@ export class DetailsPage {
   	}
 
   	processDetailsPageData(data){
-  		console.info("response",data);
   		for(var i=0;i<5;i++){
   			var obj = {
 				id : i+1,
@@ -182,7 +181,7 @@ export class DetailsPage {
 		});
 
 		/*toast.onDidDismiss(() => {
-			console.log('Dismissed toast');
+
 		});*/
 
 		toast.present();

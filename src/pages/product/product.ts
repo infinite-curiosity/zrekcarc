@@ -150,7 +150,7 @@ export class CrackerItem {
 		});
 
 		/*toast.onDidDismiss(() => {
-			console.log('Dismissed toast');
+
 		});*/
 
 		toast.present();

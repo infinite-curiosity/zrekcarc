@@ -48,7 +48,6 @@ export class OrderHistoryPage {
 			.map(res => res.json())
 			.subscribe(res => {
 				if(res.response===200){
-					console.info("response",res);
 					this.list = (res.data && res.data.orders) ? res.data.orders : [];
 					this.list.forEach(item => {
 						item.orderStatusText = this.getOrderStatusText(item.status);
@@ -88,7 +87,6 @@ export class OrderHistoryPage {
 			.map(res => res.json())
 			.subscribe(res => {
 				if(res.response===200){
-					console.info("response",res);
 					order.details = res.data;
 					if(order.details && order.details.couponCode=="null"){
 						order.details.couponCode = null;
@@ -238,7 +236,7 @@ export class OrderHistoryPage {
 		});
 
 		/*toast.onDidDismiss(() => {
-			console.log('Dismissed toast');
+
 		});*/
 
 		toast.present();

@@ -103,7 +103,6 @@ export class ListingPage {
 			.post(serviceUrl,request)
 			.map(res => res.json())
 			.subscribe(res => {
-				console.info("response",res);
 				this.processListingData(res.data);
 				/*if(res.response===200){
 					this.events.publish('logIn', true);

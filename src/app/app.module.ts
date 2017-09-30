@@ -10,7 +10,7 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
-/*import "../vendors/swiper/js/swiper.min.js";*/
+//import 'assets/js/material.min.js';
 import { NgxSiemaModule, NgxSiemaService } from 'ngx-siema';
 
 import { AboutPage } from '../pages/about/about';
