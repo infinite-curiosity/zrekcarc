@@ -1,12 +1,10 @@
 page-home {
-	$home-page-slider-height :136px;
-	.swiper-pagination-bullet-active{
-		background: #eee;
-	}
-	.home-page-top-slider{
+	$home-page-slider-height :150px;
+	.home-page-slider{
 		height: $home-page-slider-height;
 		.home-slider-image{
 			width: 100%;
+			height: $home-page-slider-height;
 		}
 	}
 	ion-content{

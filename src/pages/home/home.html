@@ -13,11 +13,11 @@
 </ion-header>
 <ion-content>
 	<section class="home-wrapper" [hidden]="pageLoading">
-		<article class="home-page-top-slider placeholder-loading" [hidden]="showHomeSlider">
+		<article class="home-page-slider placeholder-loading" [hidden]="showHomeSlider">
 			<div class="animated-background"></div>
 		</article>
-		<section id="home-page-slider" *ngIf="showHomeSlider">
-			<div id="homeSlider" class="carousel slide" data-ride="carousel" data-interval="3000" data-wrap="true">
+		<section class="home-page-slider" *ngIf="showHomeSlider">
+			<!-- <div id="homeSlider" class="carousel slide" data-ride="carousel" data-interval="3000" data-wrap="true">
 				<div class="carousel-inner home-page-top-slider" role="listbox">
 					<div class="carousel-item active" *ngFor="let obj of bannerImagesList" >
 						<img class="home-slider-image" src = "{{bannerImagesList[0].src}}"/>
@@ -34,7 +34,12 @@
 				  <span class="carousel-control-next-icon" aria-hidden="true"></span>
 				  <span class="sr-only">Next</span>
 				</a>
-			  </div>
+			  </div> -->
+			<ngx-siema [options]="options" *ngIf="bannerImagesList && bannerImagesList.length">
+				<ngx-siema-slide *ngFor="let obj of bannerImagesList" >
+					<img class="home-slider-image" src = "{{obj.src}}"/>
+				</ngx-siema-slide>
+			</ngx-siema>
 		</section>
 		<section class="card-section" [hidden]="pageLoading">
 			<h2 class="card-section-title"> Shop By Category</h2>

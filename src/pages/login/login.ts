@@ -72,10 +72,6 @@ export class LoginPage {
       this.loadingRef.present();
       var userName = this.loginObj.mobileNo;
       var serviceUrl = this.appService.getBaseUrl()+"/user/login";
-      if(this.loginObj.mobileNo==1111111111){
-        userName = "admin";
-        serviceUrl = this.appService.getBaseUrl()+"/admin/login";
-      }
   		var request = {
             data: userName,
             password: this.loginObj.pwd
@@ -85,13 +81,7 @@ export class LoginPage {
 		  	.map(res => res.json())
 		  	.subscribe(res => {
 		  		if(res.response===200){
-            if(this.loginObj.mobileNo==1111111111){
-              res.data.isAdmin = true;
-              res.data.name = "Admin";
-            }
-            else{
-              res.data.isAdmin = false;
-            }
+            res.data.isAdmin = false;
             this.events.publish('logIn',true,res.data.id,res.data.name,res.data.isAdmin);
             this.presentToast("Welcome "+res.data.name+" !!");
             this.loginObj = this.createLoginObj();

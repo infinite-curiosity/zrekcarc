@@ -11,6 +11,7 @@ import { MaterialModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 /*import "../vendors/swiper/js/swiper.min.js";*/
+import { NgxSiemaModule, NgxSiemaService } from 'ngx-siema';
 
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
@@ -57,6 +58,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     FormsModule,
     HttpModule,
     MaterialModule.forRoot(),
+    NgxSiemaModule.forRoot(),
     BrowserAnimationsModule
   ],
   bootstrap: [IonicApp],
@@ -80,6 +82,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AppService,
     StatusBar,
     SplashScreen,
+    NgxSiemaService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

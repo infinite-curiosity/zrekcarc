@@ -5,6 +5,7 @@ import { Events } from 'ionic-angular';
 import { CrackerItem } from '../product/product';
 import { ListingPage } from '../listing/listing';
 import { AppService } from "../../app/app.service";
+import { NgxSiemaOptions, NgxSiemaService  } from 'ngx-siema';
 
 @Component({
   	selector: 'page-home',
@@ -12,7 +13,7 @@ import { AppService } from "../../app/app.service";
 })
 export class HomePage {
 	public categoriesList;
-	public bannerImagesList;
+	public bannerImagesList = [];
 	public brandsList;
 	public newArrivalsList;
 	public discountList;
@@ -21,12 +22,45 @@ export class HomePage {
 	public loadingRef;
 	public homeSlider;
 	public showHomeSlider;
+	public options: NgxSiemaOptions;
 
 	@ViewChild(CrackerItem) crackerItem: CrackerItem;
 
-	constructor(public navCtrl: NavController, private http: Http, public platform: Platform, public events : Events, public appService : AppService) {
+	constructor(public navCtrl: NavController, private http: Http, public platform: Platform, public events : Events, public appService : AppService, public ngxSiemaService: NgxSiemaService) {
 		this.loadingRef = this.appService.getLoadingRef();
 		this.initHomePage();
+		this.initCarouselComponent();
+	}
+
+	initCarouselComponent(){
+		this.options = {
+			selector: '.siema',
+			duration: 200,
+			easing: 'ease-out',
+			perPage: 1,
+			startIndex: 0,
+			draggable: true,
+			threshold: 20,
+			loop: true,
+			onInit: () => {
+			  // runs immediately after first initialization
+			},
+			onChange: () => {
+			  // runs after slide change
+			},
+		};
+	}
+
+	prev() {
+		this.ngxSiemaService.prev(1).subscribe((data: any) => function(){} );
+	}
+
+	next() {
+		this.ngxSiemaService.next(1).subscribe((data: any) => function(){});
+	}
+
+	goTo() {
+		this.ngxSiemaService.goTo(1).subscribe((data: any) => function(){});
 	}
 
 	ionViewWillEnter(){
@@ -85,7 +119,14 @@ export class HomePage {
 					if(allLoaded){
 						setTimeout(()=>{
 							this.showHomeSlider = true;
-						},1000);
+							setInterval(()=>{
+								try{
+									this.next();
+								}catch(e){
+
+								}
+							},3000);
+						},2000);
 					}
 				});
 			};
