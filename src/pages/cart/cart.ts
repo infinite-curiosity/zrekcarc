@@ -90,14 +90,7 @@ export class ShoppingCartPage {
 
   	/*navigation ends here*/
 
-  	onSelectAddress(address){
-  		this.selectedDeliveryAddress = address;
-  	}
-
-  	onSelectPaymentMode(paymentMode){
-  		this.selectedPaymentMode = paymentMode;
-  	}
-
+	/* cart item related functions starts here */
   	calculateItemTotal(item){
 		item.totalAmount = item.netPrice * item.cartQuantity;
 		item.totalAmount = item.totalAmount.toFixed(2);
@@ -113,7 +106,6 @@ export class ShoppingCartPage {
 	}
 
 	fetchData(){
-		//this.loadingRef = this.appService.getLoadingRef();
 		this.loading = true;
 		this.loadingRef.present();
 		this.appService.getCartItems().subscribe(res => {
@@ -143,8 +135,16 @@ export class ShoppingCartPage {
        	);
 	}
 
+	disableContinue(){
+		return !(this.grandTotal && this.grandTotal>0);
+	}
+
+
+	/* cart item related functions ends here */
+
+	/* coupon code related functions starts here */
+
   	applyCouponCode(couponCode){
-		//this.loadingRef = this.appService.getLoadingRef();
 		this.loadingRef.present();
 		var request = {
 			uid: this.appService.getUserId(),
@@ -184,8 +184,24 @@ export class ShoppingCartPage {
   		);
 	}
 
+	getCouponConstants(){
+		return{
+			COUPON_TYPE_NONE : 0,
+			COUPON_TYPE_OTHER : 1001,
+			COUPON_TYPE_ACK_REFER : 1002,
+			COUPON_TYPE_REFER : 1003
+		}
+	}
+
+	disableApplyCoupon(){
+		return !(this.couponCode && (typeof this.couponCode)==="string" && this.couponCode.length>3);
+	}
+
+	/* coupon code related functions ends here */
+
+	/* address related functions starts here */
+
   	fetchAddress(){
-  		//this.loadingRef = this.appService.getLoadingRef();
   		this.loadingRef.present();
   		var request = {
 			uid: this.appService.getUserId()
@@ -212,52 +228,10 @@ export class ShoppingCartPage {
 				}
 			}
 		);
-
-		//return thisObservable;
 	}
-
-	onClickPlaceOrder(){
-		var request = {
-		  uid: this.appService.getUserId(),
-		  addressId: this.selectedDeliveryAddressId,
-		  paymentMode: null,
-		  couponId: 2343,//null,
-		  couponType: 2343,//null
-	  	};
-
-		if(this.couponApplicability == "applicable"){
-			request.couponId = this.couponCode;
-			request.couponType = this.couponType;
-		}
-		switch(this.selectedPaymentMode){
-			case "cod":
-				request.paymentMode = 100;
-				break;
-			case "online":
-				request.paymentMode = 101;
-				break;
-			default:
-				request.paymentMode = 100;
-				break;
-		}
-
-		var serviceUrl = this.appService.getBaseUrl()+"/store/checkOut";
-		var thisObservable =  this.http
-			.post(serviceUrl,request)
-			.map(res => res.json());
-		thisObservable.subscribe(res => {
-			if(res.response===200){
-				this.presentToast("Order placed successfully")
-				this.navCtrl.push(OrderHistoryPage);
-			}else{
-
-			}
-		});
-		return thisObservable;
-	}
-
 
   	doAddAddress(){
+		this.loadingRef.present();
   		var request = {
   			uid: this.appService.getUserId(),
   			address:{
@@ -286,10 +260,33 @@ export class ShoppingCartPage {
 
 			},
 			() => {
-
+				this.loadingRef.dismiss();
 			}
 		);
-  	}
+	}
+
+	onSelectAddress(address){
+		this.selectedDeliveryAddress = address;
+	}
+
+  	resetNewAddress(){
+  		this.newAddress = {
+			addressLine1: null,
+			addressLine1Invalid: false,
+			addressLine2: null,
+			addressLine2Invalid: false,
+			city: null,
+			cityInvalid: false,
+			state: null,
+			stateInvalid: false,
+			pinCode: null,
+			pinCodeInvalid: false,
+			contactNo: null,
+			contactNoInvalid: false,
+			alternateContact: null,
+			alternateContactInvalid: false,
+		}
+	}
 
 	validateText(text,field){
 		if(text && ( text.length >= this.ADDRESS_MIN_LENGTH) && ( text.length <= this.ADDRESS_MAX_LENGTH)){
@@ -329,13 +326,13 @@ export class ShoppingCartPage {
 		return !valid;
 	}
 
-  	disableApplyCoupon(){
-  		return !(this.couponCode && (typeof this.couponCode)==="string" && this.couponCode.length>3);
-  	}
+	/* address related functions ends here  */
 
-  	disableContinue(){
-  		return !(this.grandTotal && this.grandTotal>0);
-  	}
+	/* payment related functions starts here */
+
+	onSelectPaymentMode(paymentMode){
+		this.selectedPaymentMode = paymentMode;
+	}
 
   	disablePlaceOrder(){
   		var flag = false;
@@ -351,35 +348,98 @@ export class ShoppingCartPage {
   			flag = true;
   		}
   		return flag;
-  	}
+	}
 
-  	resetNewAddress(){
-  		this.newAddress = {
-			addressLine1: null,
-			addressLine1Invalid: false,
-			addressLine2: null,
-			addressLine2Invalid: false,
-			city: null,
-			cityInvalid: false,
-			state: null,
-			stateInvalid: false,
-			pinCode: null,
-			pinCodeInvalid: false,
-			contactNo: null,
-			contactNoInvalid: false,
-			alternateContact: null,
-			alternateContactInvalid: false,
+	onClickPlaceOrder(){
+		var request = {
+		  uid: this.appService.getUserId(),
+		  addressId: this.selectedDeliveryAddressId,
+		  paymentMode: null,
+		  couponId: 2343,
+		  couponType: 2343,
+	  	};
+
+		if(this.couponApplicability == "applicable"){
+			request.couponId = this.couponCode;
+			request.couponType = this.couponType;
 		}
-  	}
-
-	getCouponConstants(){
-		return{
-			COUPON_TYPE_NONE : 0,
-			COUPON_TYPE_OTHER : 1001,
-			COUPON_TYPE_ACK_REFER : 1002,
-			COUPON_TYPE_REFER : 1003
+		switch(this.selectedPaymentMode){
+			case "cod":
+				request.paymentMode = 100;
+				this.doCashOnDeliveryPayment(request);
+				break;
+			case "online":
+				request.paymentMode = 101;
+				this.doPayUMoneyPayment(request);
+				break;
+			default:
+				request.paymentMode = 100;
+				this.doCashOnDeliveryPayment(request);
+				break;
 		}
 	}
+
+	doPayUMoneyPayment(request){
+		request = {
+			"notifyUrl": "https://your.eshop.com/notify",
+			"customerIp": "127.0.0.1",
+			"merchantPosId": "145227",
+			"description": "RTV market",
+			"currencyCode": "PLN",
+			"totalAmount": "15000",
+			"extOrderId":"xviosvztc71h5u0w2k8bf0",
+			"buyer": {
+			  "email": "john.doe@example.com",
+			  "phone": "654111654",
+			  "firstName": "John",
+			  "lastName": "Doe",
+			  "language": "en"
+					 },
+			"products": [
+				{
+					"name": "Wireless Mouse for Laptop",
+					"unitPrice": "15000",
+					"quantity": "1"
+			   }
+			]
+		};
+		var requestHeaders = {
+			headers : null
+		};
+		requestHeaders.headers = {
+			"Content-Type": "application/json",
+			"Authorization": "Bearer 3e5cac39-7e38-4139-8fd6-30adc06a61bd"
+		};
+		this.loadingRef.present();
+		var serviceUrl = "https://secure.snd.payu.com/api/v2_1/orders";
+		var thisObservable =  this.http
+			.post(serviceUrl,request,requestHeaders)
+			.map(res => res.json());
+		thisObservable.subscribe(res => {
+			console.info("doPayUMoneyPayment",res);
+			this.presentToast("Order placed successfully")
+			this.loadingRef.dismiss();
+		});
+	}
+
+	doCashOnDeliveryPayment(request){
+		this.loadingRef.present();
+		var serviceUrl = this.appService.getBaseUrl()+"/store/checkOut";
+		var thisObservable =  this.http
+			.post(serviceUrl,request)
+			.map(res => res.json());
+		thisObservable.subscribe(res => {
+			if(res.response===200){
+				this.presentToast("Order placed successfully")
+				this.navCtrl.push(OrderHistoryPage);
+			}else{
+
+			}
+			this.loadingRef.dismiss();
+		});
+	}
+
+	/* payment related functions ends here  */
 
 	presentToast(msg) {
 		let toast = this.toastCtrl.create({
@@ -392,4 +452,5 @@ export class ShoppingCartPage {
 
 		toast.present();
 	}
+
 }
