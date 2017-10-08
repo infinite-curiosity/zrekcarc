@@ -13,7 +13,7 @@ export class OrderHistoryPage {
 	public loadingRef;
 	public orderStatusConstants;
 	public lazyLoadOffset = 0;
-	public lazyLoadLimit = 2;
+	public lazyLoadLimit = 10;
 	public fetchDataObservable;
 	public fetchDataInProgress;
 
