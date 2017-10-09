@@ -27,12 +27,7 @@ export class ShoppingCartPage {
 	public loading;
 	public ADDRESS_MIN_LENGTH = 3;
 	public ADDRESS_MAX_LENGTH = 40;
-	public thisCartPage = {
-		PUM : {
-			pay : function(){},
-			setData : function(amount,orderId,productInfo){}
-		}
-	};
+
 	@ViewChild(CrackerItem) crackerItem: CrackerItem;
 
 	constructor(public navCtrl: NavController, private http: Http, public appService: AppService, private toastCtrl: ToastController) {
@@ -47,7 +42,6 @@ export class ShoppingCartPage {
 
 	ngAfterViewInit() {
 		this.fetchData();
-		this.thisCartPage.PUM = window['PUM'];
 	}
 
 	/* cart item actions start here*/
@@ -109,7 +103,6 @@ export class ShoppingCartPage {
 			total += item.netPrice * item.cartQuantity;
 		});
 		this.grandTotal = total.toFixed(2);
-		this.thisCartPage.PUM.setData(1,new Date().getTime(),"Crackerz purchase for "+this.grandTotal+" by "+this.appService.getUserName());
 	}
 
 	fetchData(){
@@ -387,10 +380,6 @@ export class ShoppingCartPage {
 	}
 
 	doPayUMoneyPayment(request){
-
-//		window.PUM.setData(this.grandTotal,new Date().getTime(),this.cartList);
-	}
-	doPayUMoneyPayment2(request){
 		request = {
 			"notifyUrl": "https://your.eshop.com/notify",
 			"customerIp": "127.0.0.1",
