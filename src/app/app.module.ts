@@ -30,6 +30,7 @@ import { FilterComponent } from '../pages/filter/filter';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 //import {Observable} from "rxjs/Rx";
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AppService,
     StatusBar,
     SplashScreen,
+    InAppBrowser,
     NgxSiemaService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

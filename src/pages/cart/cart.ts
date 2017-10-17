@@ -4,6 +4,7 @@ import {Http} from '@angular/http';
 import { AppService } from "../../app/app.service";
 import { CrackerItem } from '../product/product';
 import { OrderHistoryPage } from '../orders/orders';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @Component({
   	selector: 'shopping-cart',
@@ -33,9 +34,10 @@ export class ShoppingCartPage {
 			setData : function(amount,orderId,productInfo){}
 		}
 	};
+	public browser;
 	@ViewChild(CrackerItem) crackerItem: CrackerItem;
 
-	constructor(public navCtrl: NavController, private http: Http, public appService: AppService, private toastCtrl: ToastController) {
+	constructor(public navCtrl: NavController, private http: Http, public appService: AppService, private toastCtrl: ToastController, public iab: InAppBrowser) {
 		this.cartList = [];
 		this.loadingRef = this.appService.getLoadingRef();
 		this.grandTotal = 0;
@@ -43,11 +45,46 @@ export class ShoppingCartPage {
 		this.couponApplicabilityMsg = null;
 		this.sectionOnDisplay = 0;
 		this.resetNewAddress();
+		// this.browser.executeScript();
+		// this.browser.insertCSS();
+		// this.browser.close();
 	}
 
 	ngAfterViewInit() {
 		this.fetchData();
 		this.thisCartPage.PUM = window['PUM'];
+		this.onClickOpenInAppBrowser();
+	}
+
+	onClickOpenInAppBrowser(){
+		var url = "https://ionicframework.com/";
+		var target = "_blank";
+		var options = "location = no"
+		this.browser = this.iab.create(url, target,options);
+		this.browser.addEventListener('loadstart', this.loadstartCallback);
+		this.browser.addEventListener('loadstop', this.loadstopCallback);
+		this.browser.addEventListener('loadloaderror', this.loaderrorCallback);
+		this.browser.addEventListener('exit', this.exitCallback);
+	}
+
+	loadstartCallback(eventType,url,errorCode,errorMessage){
+		alert("loadstartCallback");
+		console.info("eventType,url",eventType,url);
+	}
+
+	loadstopCallback(eventType,url,errorCode,errorMessage){
+		alert("loadstopCallback");
+		console.info("eventType,url",eventType,url);
+	}
+
+	loaderrorCallback(eventType,url,errorCode,errorMessage){
+		alert("loaderrorCallback");
+		console.info("eventType,url",eventType,url);
+	}
+
+	exitCallback(eventType,url,errorCode,errorMessage){
+		alert("exitCallback");
+		console.info("eventType,url",eventType,url);
 	}
 
 	/* cart item actions start here*/
